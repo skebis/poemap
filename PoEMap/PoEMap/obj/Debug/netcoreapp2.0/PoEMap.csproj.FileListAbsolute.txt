@@ -1,0 +1,11 @@
+D:\Koulu\jkyläsettiä\ohjtyo\poemap\PoEMap\PoEMap\bin\Debug\netcoreapp2.0\PoEMap.deps.json
+D:\Koulu\jkyläsettiä\ohjtyo\poemap\PoEMap\PoEMap\bin\Debug\netcoreapp2.0\PoEMap.runtimeconfig.json
+D:\Koulu\jkyläsettiä\ohjtyo\poemap\PoEMap\PoEMap\bin\Debug\netcoreapp2.0\PoEMap.runtimeconfig.dev.json
+D:\Koulu\jkyläsettiä\ohjtyo\poemap\PoEMap\PoEMap\bin\Debug\netcoreapp2.0\PoEMap.dll
+D:\Koulu\jkyläsettiä\ohjtyo\poemap\PoEMap\PoEMap\bin\Debug\netcoreapp2.0\PoEMap.pdb
+D:\Koulu\jkyläsettiä\ohjtyo\poemap\PoEMap\PoEMap\obj\Debug\netcoreapp2.0\PoEMap.csprojAssemblyReference.cache
+D:\Koulu\jkyläsettiä\ohjtyo\poemap\PoEMap\PoEMap\obj\Debug\netcoreapp2.0\PoEMap.csproj.CoreCompileInputs.cache
+D:\Koulu\jkyläsettiä\ohjtyo\poemap\PoEMap\PoEMap\obj\Debug\netcoreapp2.0\PoEMap.AssemblyInfoInputs.cache
+D:\Koulu\jkyläsettiä\ohjtyo\poemap\PoEMap\PoEMap\obj\Debug\netcoreapp2.0\PoEMap.AssemblyInfo.cs
+D:\Koulu\jkyläsettiä\ohjtyo\poemap\PoEMap\PoEMap\obj\Debug\netcoreapp2.0\PoEMap.dll
+D:\Koulu\jkyläsettiä\ohjtyo\poemap\PoEMap\PoEMap\obj\Debug\netcoreapp2.0\PoEMap.pdb
