@@ -9,3 +9,14 @@ D:\Koulu\jkyläsettiä\ohjtyo\poemap\PoEMap\PoEMap\obj\Debug\netcoreapp2.0\PoEMa
 D:\Koulu\jkyläsettiä\ohjtyo\poemap\PoEMap\PoEMap\obj\Debug\netcoreapp2.0\PoEMap.AssemblyInfo.cs
 D:\Koulu\jkyläsettiä\ohjtyo\poemap\PoEMap\PoEMap\obj\Debug\netcoreapp2.0\PoEMap.dll
 D:\Koulu\jkyläsettiä\ohjtyo\poemap\PoEMap\PoEMap\obj\Debug\netcoreapp2.0\PoEMap.pdb
+C:\Users\Emil\Documents\kurssit\ohjtyo\poemap\PoEMap\PoEMap\bin\Debug\netcoreapp2.0\PoEMap.deps.json
+C:\Users\Emil\Documents\kurssit\ohjtyo\poemap\PoEMap\PoEMap\bin\Debug\netcoreapp2.0\PoEMap.runtimeconfig.json
+C:\Users\Emil\Documents\kurssit\ohjtyo\poemap\PoEMap\PoEMap\bin\Debug\netcoreapp2.0\PoEMap.runtimeconfig.dev.json
+C:\Users\Emil\Documents\kurssit\ohjtyo\poemap\PoEMap\PoEMap\bin\Debug\netcoreapp2.0\PoEMap.dll
+C:\Users\Emil\Documents\kurssit\ohjtyo\poemap\PoEMap\PoEMap\bin\Debug\netcoreapp2.0\PoEMap.pdb
+C:\Users\Emil\Documents\kurssit\ohjtyo\poemap\PoEMap\PoEMap\obj\Debug\netcoreapp2.0\PoEMap.csprojResolveAssemblyReference.cache
+C:\Users\Emil\Documents\kurssit\ohjtyo\poemap\PoEMap\PoEMap\obj\Debug\netcoreapp2.0\PoEMap.csproj.CoreCompileInputs.cache
+C:\Users\Emil\Documents\kurssit\ohjtyo\poemap\PoEMap\PoEMap\obj\Debug\netcoreapp2.0\PoEMap.AssemblyInfoInputs.cache
+C:\Users\Emil\Documents\kurssit\ohjtyo\poemap\PoEMap\PoEMap\obj\Debug\netcoreapp2.0\PoEMap.AssemblyInfo.cs
+C:\Users\Emil\Documents\kurssit\ohjtyo\poemap\PoEMap\PoEMap\obj\Debug\netcoreapp2.0\PoEMap.dll
+C:\Users\Emil\Documents\kurssit\ohjtyo\poemap\PoEMap\PoEMap\obj\Debug\netcoreapp2.0\PoEMap.pdb
