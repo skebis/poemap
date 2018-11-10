@@ -1,19 +1,28 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 
 namespace PoEMap
 {
     public class Startup
     {
+        private Uri baseAddress = new Uri("http://www.pathofexile.com/api/public-stash-tabs?id=");
+        private Uri startAddress = new Uri("http://www.pathofexile.com/api/public-stash-tabs?id=278632021-289226584-272524755-312580195-294901203");
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            WebClient client = new WebClient();
+            string jsonContent = client.DownloadString(startAddress.OriginalString);
+            Object tempObj = JsonConvert.DeserializeObject(jsonContent);
         }
 
         public IConfiguration Configuration { get; }
