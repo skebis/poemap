@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace PoEMap
 {
@@ -19,10 +20,14 @@ namespace PoEMap
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
-            WebClient client = new WebClient();
-            string jsonContent = client.DownloadString(startAddress.OriginalString);
-            Object tempObj = JsonConvert.DeserializeObject(jsonContent);
+            try
+            {
+                WebClient client = new WebClient();
+                string jsonContent = client.DownloadString(startAddress.OriginalString);
+                JObject tempObj = JObject.Parse(jsonContent);
+            }
+            catch (Exception e) { Console.WriteLine(e.Message); }
+            
         }
 
         public IConfiguration Configuration { get; }
