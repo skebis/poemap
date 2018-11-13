@@ -12,8 +12,10 @@ namespace PoEMap
 {
     public class Program
     {
+
         public static void Main(string[] args)
         {
+            ApiFetching.ApiFetch();
             BuildWebHost(args).Run();
         }
 
