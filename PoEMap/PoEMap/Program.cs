@@ -7,6 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using PoEMap.Classes;
 
 namespace PoEMap
 {
@@ -15,7 +16,8 @@ namespace PoEMap
 
         public static void Main(string[] args)
         {
-            ApiFetching.ApiFetch();
+            Maplist mapList = new Maplist();
+            ApiFetching.ApiFetch(mapList);
             BuildWebHost(args).Run();
         }
 

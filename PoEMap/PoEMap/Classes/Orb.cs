@@ -11,7 +11,7 @@ namespace PoEMap.Classes
 
         public Orb(string orbName)
         {
-            // Luodaan konstruktori käyttäen valmiita mahdollisia valuuttoja (esim. switch case, valuutat ovat ennaltamäärättyjä)
+            // Constructor with premade choices (chaos orb, orb of transmutation etc..), maybe switch case.
         }
     }
 }
