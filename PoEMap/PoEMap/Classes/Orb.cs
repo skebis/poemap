@@ -5,9 +5,12 @@ using System.Threading.Tasks;
 
 namespace PoEMap.Classes
 {
+    /// <summary>
+    /// Might not be needed!
+    /// </summary>
     public class Orb
     {
-        private string Name { get; set; }
+        public string Name { get; set; }
 
         public Orb(string orbName)
         {

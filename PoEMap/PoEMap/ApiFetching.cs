@@ -33,7 +33,10 @@ namespace PoEMap
                     Task<string> taskJsonContent = httpClient.GetStringAsync(nextAddress);
                     string stringJsonContent = await taskJsonContent;
                     dynamic jsonContent = JObject.Parse(stringJsonContent);
-                    maplist.StoreMaps(jsonContent);
+
+                    dynamic jsonStashes = jsonContent.stashes;
+                    maplist.StoreMaps(jsonStashes);
+
                     nextId = jsonContent.next_change_id;
                     nextAddress = baseAddress + "?id=" + nextId;
                 } catch (Exception e) { Console.WriteLine(e.Message); }

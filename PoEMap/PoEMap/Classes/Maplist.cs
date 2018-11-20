@@ -25,11 +25,11 @@ namespace PoEMap.Classes
         /// Stores all map-items from api to a Maplist.
         /// </summary>
         /// <param name="jsoncontent">Json which is stored in dynamic -type.</param>
-        public void StoreMaps(dynamic jsoncontent)
+        public void StoreMaps(dynamic jsonStashes)
         {
             try
             {
-                foreach (dynamic stash in jsoncontent["stashes"]) {
+                foreach (dynamic stash in jsonStashes) {
 
                     JArray itemsArray = stash.items;
                     if (itemsArray == null || itemsArray.Count == 0)
@@ -38,9 +38,23 @@ namespace PoEMap.Classes
                     }
                     else
                     {
+                        /// Needs testing!
                         foreach (dynamic item in itemsArray)
                         {
-                            // Check that "category" = "maps" and store the map-item into map-structure.
+                            if (item.category == "maps")
+                            {
+                                Map newMap = new Map();
+                                newMap.ItemId = item.id;
+                                newMap.Seller = stash.accountName;
+                                newMap.MapName = item.typeLine;
+                                if (item.note != null)
+                                {
+                                    string price = item.note;
+                                    newMap.Price.ParsePrice(price);
+                                }
+                                else newMap.Price = new Currency();
+                                maps.Add(newMap);
+                            }
                         }
                     }
                 }

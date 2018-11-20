@@ -10,7 +10,11 @@ namespace PoEMap.Classes
     /// </summary>
     public class Currency
     {
-        private int Price { get; set; }
-        private Orb CurrencyOrb { get; set; }
+        public int Price { get; set; }
+        public Orb CurrencyOrb { get; set; }
+
+        public void ParsePrice(string note) {
+            //
+        }
     }
 }

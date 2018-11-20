@@ -10,10 +10,10 @@ namespace PoEMap.Classes
     /// </summary>
     public class Map
     {
-        private string ItemId { get; set; }
-        private string Seller { get; set; }
-        private string MapName { get; set; }
-        private Currency Price { get; set; }
-        private Uri IconAddress { get; set; }
+        public string ItemId { get; set; }
+        public string Seller { get; set; }
+        public string MapName { get; set; }
+        public Currency Price { get; set; }
+        public Uri IconAddress { get; set; }
     }
 }
