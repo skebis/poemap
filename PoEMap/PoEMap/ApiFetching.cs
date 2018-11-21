@@ -32,13 +32,14 @@ namespace PoEMap
                 {
                     Task<string> taskJsonContent = httpClient.GetStringAsync(nextAddress);
                     string stringJsonContent = await taskJsonContent;
-                    dynamic jsonContent = JObject.Parse(stringJsonContent);
+                    JObject jsonContent = JObject.Parse(stringJsonContent);
 
-                    dynamic jsonStashes = jsonContent.stashes;
+                    JArray jsonStashes = (JArray)jsonContent.SelectToken("stashes");
                     maplist.StoreMaps(jsonStashes);
 
-                    nextId = jsonContent.next_change_id;
+                    nextId = (string)jsonContent.SelectToken("next_change_id"); ;
                     nextAddress = baseAddress + "?id=" + nextId;
+
                 } catch (Exception e) { Console.WriteLine(e.Message); }
                 await Task.Delay(timeDelay);
             }
