@@ -23,6 +23,8 @@ namespace PoEMap.Classes
 
         /// <summary>
         /// Stores all map-items from API to a Maplist.
+        /// Example-urls for putting item on sale and then removing it: http://www.pathofexile.com/api/public-stash-tabs?id=281320437-292141390-275326976-315820984-297996307
+        /// http://www.pathofexile.com/api/public-stash-tabs?id=281320781-292141741-275327517-315821351-297996674. Search for "skebis" and compare the stashes and IDs.
         /// </summary>
         /// <param name="jsoncontent">Json which is stored in JArray -type.</param>
         public void StoreMaps(JArray jsonStashes)
