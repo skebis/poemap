@@ -20,3 +20,14 @@ C:\Users\Emil\Documents\kurssit\ohjtyo\poemap\PoEMap\PoEMap\obj\Debug\netcoreapp
 C:\Users\Emil\Documents\kurssit\ohjtyo\poemap\PoEMap\PoEMap\obj\Debug\netcoreapp2.0\PoEMap.AssemblyInfo.cs
 C:\Users\Emil\Documents\kurssit\ohjtyo\poemap\PoEMap\PoEMap\obj\Debug\netcoreapp2.0\PoEMap.dll
 C:\Users\Emil\Documents\kurssit\ohjtyo\poemap\PoEMap\PoEMap\obj\Debug\netcoreapp2.0\PoEMap.pdb
+C:\Users\ebaep\Documents\Koulu\ohjtyo\poemap\PoEMap\PoEMap\bin\Debug\netcoreapp2.0\PoEMap.deps.json
+C:\Users\ebaep\Documents\Koulu\ohjtyo\poemap\PoEMap\PoEMap\bin\Debug\netcoreapp2.0\PoEMap.runtimeconfig.json
+C:\Users\ebaep\Documents\Koulu\ohjtyo\poemap\PoEMap\PoEMap\bin\Debug\netcoreapp2.0\PoEMap.runtimeconfig.dev.json
+C:\Users\ebaep\Documents\Koulu\ohjtyo\poemap\PoEMap\PoEMap\bin\Debug\netcoreapp2.0\PoEMap.dll
+C:\Users\ebaep\Documents\Koulu\ohjtyo\poemap\PoEMap\PoEMap\bin\Debug\netcoreapp2.0\PoEMap.pdb
+C:\Users\ebaep\Documents\Koulu\ohjtyo\poemap\PoEMap\PoEMap\obj\Debug\netcoreapp2.0\PoEMap.csprojAssemblyReference.cache
+C:\Users\ebaep\Documents\Koulu\ohjtyo\poemap\PoEMap\PoEMap\obj\Debug\netcoreapp2.0\PoEMap.csproj.CoreCompileInputs.cache
+C:\Users\ebaep\Documents\Koulu\ohjtyo\poemap\PoEMap\PoEMap\obj\Debug\netcoreapp2.0\PoEMap.AssemblyInfoInputs.cache
+C:\Users\ebaep\Documents\Koulu\ohjtyo\poemap\PoEMap\PoEMap\obj\Debug\netcoreapp2.0\PoEMap.AssemblyInfo.cs
+C:\Users\ebaep\Documents\Koulu\ohjtyo\poemap\PoEMap\PoEMap\obj\Debug\netcoreapp2.0\PoEMap.dll
+C:\Users\ebaep\Documents\Koulu\ohjtyo\poemap\PoEMap\PoEMap\obj\Debug\netcoreapp2.0\PoEMap.pdb

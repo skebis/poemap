@@ -46,10 +46,12 @@ namespace PoEMap.Classes
                             JObject category = item.Value<JObject>("category");
                             if (category.ContainsKey("maps"))
                             {
-                                Map newMap = new Map();
-                                newMap.ItemId = (string)item.SelectToken("id");
-                                newMap.Seller = (string)stash.SelectToken("lastCharacterName");
-                                newMap.MapName = (string)item.SelectToken("typeLine");
+                                Map newMap = new Map
+                                {
+                                    ItemId = (string)item.SelectToken("id"),
+                                    Seller = (string)stash.SelectToken("lastCharacterName"),
+                                    MapName = (string)item.SelectToken("typeLine")
+                                };
                                 if (item.ContainsKey("note"))
                                 {
                                     string price = (string)item.SelectToken("note");
