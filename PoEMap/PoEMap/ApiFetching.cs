@@ -9,13 +9,12 @@ using System.Threading.Tasks;
 namespace PoEMap
 {
     /// <summary>
-    /// Asyncronously fetches stash tab API data from the site and creates a dynamic (Json) object out of it.
+    /// Asyncronously fetches stash tab API (json) data from the site and creates a JObject out of it.
     /// </summary>
     public class ApiFetching
     {
         private static readonly string baseAddress = "http://www.pathofexile.com/api/public-stash-tabs";
         private static string nextAddress = "http://www.pathofexile.com/api/public-stash-tabs";
-        private static readonly HttpClient httpClient = new HttpClient();
         private static readonly int timeDelay = 1000;
         private static bool fetching = true;
         private static string nextId;
@@ -30,6 +29,7 @@ namespace PoEMap
             {
                 try
                 {
+                    HttpClient httpClient = new HttpClient();
                     Task<string> taskJsonContent = httpClient.GetStringAsync(nextAddress);
                     string stringJsonContent = await taskJsonContent;
                     JObject jsonContent = JObject.Parse(stringJsonContent);
@@ -37,7 +37,7 @@ namespace PoEMap
                     JArray jsonStashes = (JArray)jsonContent.SelectToken("stashes");
                     maplist.StoreMaps(jsonStashes);
 
-                    nextId = (string)jsonContent.SelectToken("next_change_id"); ;
+                    nextId = (string)jsonContent.SelectToken("next_change_id");
                     nextAddress = baseAddress + "?id=" + nextId;
 
                 } catch (Exception e) { Console.WriteLine(e.Message); }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 namespace PoEMap.Classes
 {
     /// <summary>
+    /// UNUSED!!
     /// Currency-structure to store the currency and the number of the used currency. Basically the price.
     /// </summary>
     public class Currency
@@ -23,6 +24,7 @@ namespace PoEMap.Classes
         /// <param name="price">Price of the item. Example: "~b/o 2 chaos" or "~price 1 alt".</param>
         public Currency(string price)
         {
+            Price = price;
             // Parsing the given string. Should set the price as "2 Chaos Orbs" for example.
         }
     }

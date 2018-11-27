@@ -13,7 +13,7 @@ namespace PoEMap.Classes
         public string ItemId { get; set; }
         public string Seller { get; set; }
         public string MapName { get; set; }
-        public Currency Price { get; set; }
+        public string Price { get; set; }
         public Uri IconAddress { get; set; }
     }
 }
