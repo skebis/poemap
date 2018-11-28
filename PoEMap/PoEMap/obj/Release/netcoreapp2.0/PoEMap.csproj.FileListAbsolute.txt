@@ -1,0 +1,10 @@
+C:\Users\ebaep\Documents\Koulu\ohjtyo\poemap\PoEMap\PoEMap\bin\Release\netcoreapp2.0\PoEMap.deps.json
+C:\Users\ebaep\Documents\Koulu\ohjtyo\poemap\PoEMap\PoEMap\bin\Release\netcoreapp2.0\PoEMap.runtimeconfig.json
+C:\Users\ebaep\Documents\Koulu\ohjtyo\poemap\PoEMap\PoEMap\bin\Release\netcoreapp2.0\PoEMap.runtimeconfig.dev.json
+C:\Users\ebaep\Documents\Koulu\ohjtyo\poemap\PoEMap\PoEMap\bin\Release\netcoreapp2.0\PoEMap.dll
+C:\Users\ebaep\Documents\Koulu\ohjtyo\poemap\PoEMap\PoEMap\bin\Release\netcoreapp2.0\PoEMap.pdb
+C:\Users\ebaep\Documents\Koulu\ohjtyo\poemap\PoEMap\PoEMap\obj\Release\netcoreapp2.0\PoEMap.csproj.CoreCompileInputs.cache
+C:\Users\ebaep\Documents\Koulu\ohjtyo\poemap\PoEMap\PoEMap\obj\Release\netcoreapp2.0\PoEMap.AssemblyInfoInputs.cache
+C:\Users\ebaep\Documents\Koulu\ohjtyo\poemap\PoEMap\PoEMap\obj\Release\netcoreapp2.0\PoEMap.AssemblyInfo.cs
+C:\Users\ebaep\Documents\Koulu\ohjtyo\poemap\PoEMap\PoEMap\obj\Release\netcoreapp2.0\PoEMap.dll
+C:\Users\ebaep\Documents\Koulu\ohjtyo\poemap\PoEMap\PoEMap\obj\Release\netcoreapp2.0\PoEMap.pdb
