@@ -22,12 +22,46 @@ namespace PoEMap.Classes
             // Nothing needed here.
         }
 
-        public void CheckDuplicates(JObject item, JObject stash)
+        /// <summary>
+        /// Removes the maps that are marked to be removed. Marked maps are either duplicates or "ghostmaps"
+        /// i.e. they have been removed from the stash.
+        /// </summary>
+        public void RemoveMaps()
+        {
+            for (int i = 0; i < maps.Count; i++)
+            {
+                if (maps[i].NeedToRemove)
+                {
+                    Console.WriteLine("found map to remove!");
+                    maps.RemoveAt(i);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks if the current map is already in the list and marks "ghostmaps" to be deleted.
+        /// </summary>
+        /// <param name="stashid">Stash id where the current map is.</param>
+        /// <param name="itemid">Maps id.</param>
+        /// <returns>True if the current map should be added to the maplist, false if not.</returns>
+        public bool CheckDuplicatesAndDeleted(string stashid, string itemid)
         {
             foreach (Map map in maps)
             {
-                // Check if an item is removed or the maplist contains a duplicate of the item.
+                if (map.StashId.Equals(stashid))
+                {
+                    if (map.ItemId.Equals(itemid))
+                    {
+                        map.NeedToRemove = false;
+                        return false;
+                    }
+                    else
+                    {
+                        map.NeedToRemove = true;
+                    }
+                }
             }
+            return true;
         }
 
         /// <summary>
@@ -38,6 +72,7 @@ namespace PoEMap.Classes
         {
             try
             {
+                List<Map> mapsToAdd = new List<Map>();
                 foreach (JObject stash in jsonStashes) {
 
                     JArray itemsArray = (JArray)stash.SelectToken("items"); ;
@@ -47,32 +82,57 @@ namespace PoEMap.Classes
                     }
                     else
                     {
-                        // Needs testing!
                         foreach (JObject item in itemsArray)
                         {
                             JObject category = item.Value<JObject>("category");
                             if (category.ContainsKey("maps"))
                             {
-                                CheckDuplicates(item, stash);
-                                Map newMap = new Map
-                                {
-                                    ItemId = (string)item.SelectToken("id"),
-                                    Seller = (string)stash.SelectToken("lastCharacterName"),
-                                    MapName = (string)item.SelectToken("typeLine")
-                                };
-                                if (item.ContainsKey("note"))
-                                {
-                                    string price = (string)item.SelectToken("note");
-                                    newMap.Price = price;
-                                }
-                                else newMap.Price = noPrice;
-
-                                maps.Add(newMap);
+                                mapsToAdd = AddMap(item, stash, mapsToAdd);
                             }
                         }
+
                     }
                 }
+                if (maps != null || maps.Count > 0)
+                {
+                    RemoveMaps();
+                }
+                maps.AddRange(mapsToAdd);
+
             } catch (Exception e) { Console.WriteLine(e.Message); }
+        }
+
+        /// <summary>
+        /// Adds the new map to the list (if conditions are met).
+        /// </summary>
+        /// <param name="item">Current map item.</param>
+        /// <param name="stash">Current stash where the map is.</param>
+        /// <param name="mapsToAdd">List of maps to be added after one API request.</param>
+        /// <returns></returns>
+        public List<Map> AddMap(JObject item, JObject stash, List<Map> mapsToAdd)
+        {
+            Map newMap = new Map(
+                (string)stash.SelectToken("id"),
+                (string)item.SelectToken("id"),
+                (string)stash.SelectToken("lastCharacterName"),
+                (string)item.SelectToken("typeLine"));
+
+            if (CheckDuplicatesAndDeleted(newMap.StashId, newMap.ItemId))
+            {
+                if (item.ContainsKey("note"))
+                {
+                    string price = (string)item.SelectToken("note");
+                    newMap.Price = new Currency(price);
+                }
+                else
+                {
+                    newMap.Price = new Currency(noPrice);
+                }
+
+                newMap.NeedToRemove = false;
+                mapsToAdd.Add(newMap);
+            }
+            return mapsToAdd;
         }
     }
 }
