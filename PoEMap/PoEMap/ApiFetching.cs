@@ -27,7 +27,9 @@ namespace PoEMap
         /// <param name="maplist">Main list of all maps.</param>
         public static async void ApiFetch(Maplist maplist)
         {
-            nextId = "283637774-294578757-277588422-318403524-300530002";  // ReadFile.ReadNextIdFromFile();
+            // Testing
+            nextId = "283667914-294606306-277613284-318429055-300566765"; 
+            // ReadFile.ReadNextIdFromFile();
             SetNextAddress();
             while (fetching)
             {

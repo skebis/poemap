@@ -43,9 +43,14 @@ namespace PoEMap.Classes
             foreach (Stash stash in stashes)
             {
                 // Needs testing!
-                if (jsonStash.SelectToken("id").Equals(stash.StashId))
+                if ((string)jsonStash.SelectToken("id") == stash.StashId)
                 {
-                    Console.WriteLine("löytyi sama stash!");
+                    // Testing
+                    if (stash.Seller == "testtradeboi")
+                    {
+                        Console.WriteLine("loytyi!");
+                    }
+
                     return stash;
                 }
             }
@@ -82,7 +87,7 @@ namespace PoEMap.Classes
                     Stash currentStash = new Stash();
                     currentStash = StashToUse(jsonStash);
 
-                    JArray itemsArray = (JArray)jsonStash.SelectToken("items"); ;
+                    JArray itemsArray = (JArray)jsonStash.SelectToken("items");
 
                     // If the stash is empty, there is no need to keep record of it until it appears again.
                     if (itemsArray == null || itemsArray.Count == 0)
