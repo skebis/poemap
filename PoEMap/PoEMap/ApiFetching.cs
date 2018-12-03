@@ -15,8 +15,8 @@ namespace PoEMap
     {
         private static readonly string baseAddress = "http://www.pathofexile.com/api/public-stash-tabs";
         private static string nextAddress = "http://www.pathofexile.com/api/public-stash-tabs";
-        // Base delay between every web request (1 second).
-        private static readonly int timeDelay = 1000;
+        // Base delay between every web request (1.5 second).
+        private static readonly int timeDelay = 1500;
         // Set data fetching to be always on.
         private static bool fetching = true;
         private static string nextId;
@@ -27,7 +27,7 @@ namespace PoEMap
         /// <param name="maplist">Main list of all maps.</param>
         public static async void ApiFetch(Maplist maplist)
         {
-            nextId = "282756516-293640271-276676962-317515589-299558290";  // ReadFile.ReadNextIdFromFile();
+            nextId = "283637774-294578757-277588422-318403524-300530002";  // ReadFile.ReadNextIdFromFile();
             SetNextAddress();
             while (fetching)
             {

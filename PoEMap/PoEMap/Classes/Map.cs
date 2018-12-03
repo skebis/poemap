@@ -10,19 +10,19 @@ namespace PoEMap.Classes
     /// </summary>
     public class Map
     {
-        public string StashId { get; set; }
         public string ItemId { get; set; }
-        public string Seller { get; set; }
         public string MapName { get; set; }
         public Currency Price { get; set; }
         public Uri IconAddress { get; set; }
-        public bool NeedToRemove { get; set; }
 
-        public Map(string stashid, string itemid, string seller, string mapname)
+        /// <summary>
+        /// Constructor for map-item.
+        /// </summary>
+        /// <param name="itemid">Map-item id.</param>
+        /// <param name="mapname">Name of the map.</param>
+        public Map (string itemid, string mapname)
         {
-            StashId = stashid;
             ItemId = itemid;
-            Seller = seller;
             MapName = mapname;
         }
     }

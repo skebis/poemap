@@ -10,11 +10,11 @@ namespace PoEMap.Classes
     /// </summary>
     public class Currency
     {
-        public string Price { get; set; }
+        public string PriceString { get; set; }
 
         public Currency()
         {
-            //
+            // Nothing needed here.
         }
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace PoEMap.Classes
         /// <param name="price">Price of the item. Example: "~b/o 2 chaos" or "~price 1 alt".</param>
         public Currency(string price)
         {
-            Price = price;
+            PriceString = price;
             // TODO: Parsing the given string. Should set the price as "2 Chaos Orbs" for example.
         }
     }
