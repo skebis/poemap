@@ -14,10 +14,12 @@ namespace PoEMap.Classes
     {
         public string StashId { get; set; }
         public string Seller { get; set; }
+        public string StashName { get; set; }
         public List<Map> Maps = new List<Map>();
-        private readonly string noPrice = "No price";
 
-        // Constructor for empty stash-object.
+        /// <summary>
+        /// Constructor for empty stash-object.
+        /// </summary>
         public Stash()
         {
             // Nothing needed here.
@@ -28,10 +30,12 @@ namespace PoEMap.Classes
         /// </summary>
         /// <param name="id">Stash id.</param>
         /// <param name="lastCharName">Owner or seller.</param>
-        public Stash(string id, string lastCharName)
+        /// <param name="stashPrice"></param>
+        public Stash(string id, string lastCharName, string stashName)
         {
             StashId = id;
             Seller = lastCharName;
+            StashName = stashName;
         }
 
         /// <summary>
@@ -50,36 +54,26 @@ namespace PoEMap.Classes
         {
             Map newMap = new Map(
                 (string)item.SelectToken("id"),
-                (string)item.SelectToken("typeLine"));
+                (string)item.SelectToken("typeLine"),
+                new Currency("Undefined"));
+
+            if (StashName != null && StashName.Length != 0 && StashName.StartsWith("~"))
+            {
+                newMap.Price = new Currency(StashName);
+            }
 
             if (item.ContainsKey("note"))
             {
                 string price = (string)item.SelectToken("note");
-                newMap.Price = new Currency(price);
-            }
-            else
-            {
-                newMap.Price = new Currency(noPrice);
+                newMap.Note = price;
+
+                if (price.StartsWith("~"))
+                {
+                    newMap.Price = new Currency(price);
+                }
             }
 
             Maps.Add(newMap);
         }
-
-        /// <summary>
-        /// Checks if the current map is already in the list and deletes the old map.
-        /// </summary>
-        /// <param name="stashid">Map-item stash id.</param>
-        /// <param name="itemid">Map-item id.</param>
-        /*public void CheckDuplicateAndDelete(string itemid)
-        {
-            foreach (Map map in maps)
-            {
-                if (map.StashId.Equals(stashid) && map.ItemId.Equals(itemid))
-                {
-                    Console.WriteLine("found duplicate, removing..");
-                    maps.Remove(map);
-                }
-            }
-        }*/
     }
 }

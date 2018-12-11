@@ -68,7 +68,8 @@ namespace PoEMap.Classes
         {
             Stash newStash = new Stash(
                 (string)jsonStash.SelectToken("id"),
-                (string)jsonStash.SelectToken("lastCharacterName"));
+                (string)jsonStash.SelectToken("lastCharacterName"),
+                (string)jsonStash.SelectToken("stash"));
             stashes.Add(newStash);
 
             return newStash;
