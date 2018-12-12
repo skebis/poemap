@@ -33,25 +33,16 @@ namespace PoEMap.Classes
         /// <returns>Current stash-object to work with.</returns>
         public Stash StashToUse(JObject jsonStash)
         {
-            // Check if the stashes-list is empty. If it is, a new stash-object should be created.
-            if (stashes == null || stashes.Count == 0)
+            // Check if the stashes-list is not null or empty so we can iterate through it.
+            if (stashes != null && stashes.Count != 0)
             {
-                return CreateNewStash(jsonStash);
-            }
-
-            // Otherwise find the same stash (with the same id and owner) from the stashes-list.
-            foreach (Stash stash in stashes)
-            {
-                // Needs testing!
-                if ((string)jsonStash.SelectToken("id") == stash.StashId)
+                // Find the same stash (with the same id and owner) from the stashes-list.
+                foreach (Stash stash in stashes)
                 {
-                    // Testing
-                    if (stash.Seller == "testtradeboi")
+                    if ((string)jsonStash.SelectToken("id") == stash.StashId)
                     {
-                        Console.WriteLine("loytyi!");
+                        return stash;
                     }
-
-                    return stash;
                 }
             }
 

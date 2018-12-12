@@ -14,6 +14,8 @@ namespace PoEMap.Classes
         public string MapName { get; set; }
         public string Note { get; set; }
         public Currency Price { get; set; }
+        public string League { get; set; }
+        // icon maybe not needed.
         public Uri IconAddress { get; set; }
 
         /// <summary>
@@ -29,11 +31,31 @@ namespace PoEMap.Classes
         /// </summary>
         /// <param name="itemid">Map-item id.</param>
         /// <param name="mapname">Name of the map.</param>
-        public Map (string itemid, string mapname, Currency defPrice)
+        /// <param name="defaultPrice">Price.</param>
+        /// <param name="league">League where the item is.</param>
+        public Map (string itemid, string mapname, Currency defaultPrice, string league)
         {
             ItemId = itemid;
             MapName = mapname;
-            Price = defPrice;
+            Price = defaultPrice;
+            League = league;
+        }
+
+        /// <summary>
+        /// Sets the price of the map-item.
+        /// </summary>
+        /// <param name="price">Price.</param>
+        public void SetPrice(string price)
+        {
+            Price.SetPrice(price);
+        }
+
+        /// <summary>
+        /// Sets the price to "undefined".
+        /// </summary>
+        public void SetNoPrice()
+        {
+            Price.SetNoPrice();
         }
     }
 }

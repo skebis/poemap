@@ -27,10 +27,12 @@ namespace PoEMap
         /// <param name="maplist">Main list of all maps.</param>
         public static async void ApiFetch(Maplist maplist)
         {
+            // maplist = ReadFile.ReadMapsFromFile();
             // Testing
-            nextId = "283667914-294606306-277613284-318429055-300566765"; 
-            // ReadFile.ReadNextIdFromFile();
+            nextId = "283667914-294606306-277613284-318429055-300566765"; // ReadFile.ReadNextIdFromFile();
+
             SetNextAddress();
+
             while (fetching)
             {
                 // Print the current ID for debugging and testing.
@@ -55,9 +57,9 @@ namespace PoEMap
                     string errMsg = e.Message;
                     switch (errMsg)
                     {
-                        // TODO: Regex to check only "429".
+                        // Maybe regex to check only "429".
                         case "Response status code does not indicate success: 429 (Too Many Requests).":
-                            await Task.Delay(timeDelay * 30);
+                            await Task.Delay(timeDelay * 20);
                             break;
 
                         default:
@@ -66,7 +68,7 @@ namespace PoEMap
                     Console.WriteLine(e.Message);
                 }
 
-                // Wait 1 second before making another request to avoid errors.
+                // Wait a bit before making another request to avoid flooding / errors.
                 await Task.Delay(timeDelay);
             }
         }

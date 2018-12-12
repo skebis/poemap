@@ -47,7 +47,7 @@ namespace PoEMap.Classes
         }
 
         /// <summary>
-        /// Adds the new map to the list (if conditions are met).
+        /// Adds the new map to the list.
         /// </summary>
         /// <param name="item">Current map item.</param>
         public void AddMap(JObject item)
@@ -55,23 +55,26 @@ namespace PoEMap.Classes
             Map newMap = new Map(
                 (string)item.SelectToken("id"),
                 (string)item.SelectToken("typeLine"),
-                new Currency("Undefined"));
+                new Currency(),
+                (string)item.SelectToken("league"));
 
-            if (StashName != null && StashName.Length != 0 && StashName.StartsWith("~"))
-            {
-                newMap.Price = new Currency(StashName);
-            }
-
+            string price = "";
+            
             if (item.ContainsKey("note"))
             {
-                string price = (string)item.SelectToken("note");
+                price = (string)item.SelectToken("note");
                 newMap.Note = price;
-
-                if (price.StartsWith("~"))
-                {
-                    newMap.Price = new Currency(price);
-                }
             }
+
+            if (price.StartsWith('~'))
+            {
+                newMap.SetPrice(price);
+            }
+            else if (StashName != null && StashName.Length != 0 && StashName.StartsWith("~"))
+            {
+                newMap.SetPrice(StashName);
+            }
+            else newMap.SetNoPrice();
 
             Maps.Add(newMap);
         }

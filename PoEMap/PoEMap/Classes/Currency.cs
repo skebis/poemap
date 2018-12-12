@@ -24,17 +24,29 @@ namespace PoEMap.Classes
         /// <summary>
         /// Constructor for currency / price of the item.
         /// </summary>
-        /// <param name="price">Usually the price of the item. Example: "~b/o 2 chaos" or "~price 1 alt". If it's just a note or there is nothing, mark price as "undefined".</param>
+        /// <param name="price"></param>
         public Currency(string price)
         {
-            if (price.Equals("Undefined")) PriceString = price;
-            else
-            {
-                string validPrice = CreateValidPrice(price);
-                PriceString = validPrice;
-            }
+            PriceString = price;
         }
-        
+
+        /// <summary>
+        /// Sets the price to "undefined".
+        /// </summary>
+        public void SetNoPrice()
+        {
+            PriceString = "Undefined";
+        }
+
+        /// <summary>
+        /// Setter for price.
+        /// </summary>
+        /// <param name="price">Usually the price of the item. Example: "~b/o 2 chaos" or "~price 1 alt".</param>
+        public void SetPrice(string price)
+        {
+            PriceString = CreateValidPrice(price);
+        }
+
         /// <summary>
         /// Modifies the price-note to a better format. Example: "~b/o 50 chaos" becomes "50 Chaos Orb".
         /// </summary>
@@ -60,6 +72,10 @@ namespace PoEMap.Classes
 
                     case "jew":
                         orb = "Jeweller Orb";
+                        break;
+
+                    case "alch":
+                        orb = "Orb of Alchemy";
                         break;
 
                     default:
