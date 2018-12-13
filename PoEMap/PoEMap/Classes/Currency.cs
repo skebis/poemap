@@ -63,19 +63,72 @@ namespace PoEMap.Classes
 
                 string number = numberAndPrice[0];
                 string orb = numberAndPrice[1];
-                // TODO: All possible cases AND TESTING!
+                // TODO: Testing
+
                 switch (numberAndPrice[1])
                 {
                     case "chaos":
                         orb = "Chaos Orb";
                         break;
 
+                    case "alch":
+                        orb = "Orb of Alchemy";
+                        break;
+
+                    case "chisel":
+                        orb = "Cartographer's Chisel";
+                        break;
+
+                    case "vaal":
+                        orb = "Vaal Orb";
+                        break;
+
                     case "jew":
                         orb = "Jeweller Orb";
                         break;
 
-                    case "alch":
-                        orb = "Orb of Alchemy";
+                    case "fuse":
+                        orb = "Orb of Fusing";
+                        break;
+
+                    case "chance":
+                        orb = "Orb of Chance";
+                        break;
+
+                    case "scour":
+                        orb = "Orb of Scouring";
+                        break;
+
+                    case "alt":
+                        orb = "Orb of Alteration";
+                        break;
+
+                    case "regal":
+                        orb = "Regal Orb";
+                        break;
+
+                    case "chrom":
+                        orb = "Chromatic Orb";
+                        break;
+
+                    case "regret":
+                        orb = "Orb of Regret";
+                        break;
+
+                    case "blessed":
+                        orb = "Blessed Orb";
+                        break;
+
+                    case "exa":
+                        orb = "Exalted Orb";
+                        break;
+
+                    case "divine":
+                        orb = "Divine Orb";
+                        break;
+
+                    case "gcp":
+                        orb = "Gemcutter's Prism";
                         break;
 
                     default:
