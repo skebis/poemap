@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using PoEMap.Classes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -13,9 +11,10 @@ namespace PoEMap
     /// </summary>
     public class ApiFetching
     {
+        private static HttpClient httpClient = new HttpClient();
         private static readonly string baseAddress = "http://www.pathofexile.com/api/public-stash-tabs";
         private static string nextAddress = "http://www.pathofexile.com/api/public-stash-tabs";
-        // Base delay between every web request (1.5 second).
+        // Base delay between every web request (1.5 seconds).
         private static readonly int timeDelay = 1500;
         // Set data fetching to be always on.
         private static bool fetching = true;
@@ -39,7 +38,6 @@ namespace PoEMap
                 Console.WriteLine("Started parsing API with id " + nextId);
                 try
                 {
-                    HttpClient httpClient = new HttpClient();
                     Task<string> taskJsonContent = httpClient.GetStringAsync(nextAddress);
 
                     string stringJsonContent = await taskJsonContent;

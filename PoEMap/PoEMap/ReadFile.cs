@@ -14,7 +14,7 @@ namespace PoEMap
         public static Maplist ReadMapsFromFile()
         {
             Maplist maplist = new Maplist();
-            // TODO: Read the existing maps from the file.
+            // TODO: Read the existing maps from the file. / Read maps from database.
             return maplist;
         }
 
