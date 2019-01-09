@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
+using System.Web;
+using System.Data.SqlClient;
 using System.Collections.Generic;
 
 namespace PoEMap.Classes
@@ -72,6 +74,17 @@ namespace PoEMap.Classes
         {
             try
             {
+                // Testing sql connection!
+                /*string conString = "Server=tcp:poemapsql.database.windows.net,1433;Initial Catalog=PoEMapDatabase;Persist Security Info=False;" +
+                    "Integrated Security=True;MultipleActiveResultSets=False;" +
+                    "Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+                using (SqlConnection sqlCon = new SqlConnection(conString))
+                {
+                    sqlCon.Open();
+                    Console.WriteLine("Connection opened!");
+                }
+                Console.WriteLine("Conncetion should be closed!");*/
+
                 foreach (JObject jsonStash in jsonStashes) {
 
                     Stash currentStash = new Stash();
