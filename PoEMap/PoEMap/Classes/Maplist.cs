@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Web;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using System.Collections.Generic;
 
@@ -18,12 +19,14 @@ namespace PoEMap.Classes
         // List of all stashes.
         private List<Stash> stashes = new List<Stash>();
 
+        private IConfiguration configuration;
+
         /// <summary>
         /// Constructor for Maplist.
         /// </summary>
-        public Maplist()
+        public Maplist(IConfiguration Configuration)
         {
-            // Nothing needed here.
+            configuration = Configuration;
         }
         
         /// <summary>
@@ -75,15 +78,15 @@ namespace PoEMap.Classes
             try
             {
                 // Testing sql connection!
-                /*string conString = "Server=tcp:poemapsql.database.windows.net,1433;Initial Catalog=PoEMapDatabase;Persist Security Info=False;" +
-                    "Integrated Security=True;MultipleActiveResultSets=False;" +
-                    "Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+                string conString = ConfigurationExtensions
+                    .GetConnectionString(configuration, "DefaultConnection");
+
                 using (SqlConnection sqlCon = new SqlConnection(conString))
                 {
                     sqlCon.Open();
                     Console.WriteLine("Connection opened!");
                 }
-                Console.WriteLine("Conncetion should be closed!");*/
+                Console.WriteLine("Connection should be closed!");
 
                 foreach (JObject jsonStash in jsonStashes) {
 

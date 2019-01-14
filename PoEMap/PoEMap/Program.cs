@@ -18,7 +18,7 @@ namespace PoEMap
         {
             Maplist mapList = new Maplist();
 
-            mapList = ReadFile.ReadMapsFromFile();
+            //mapList = ReadFile.ReadMapsFromFile();
 
             ApiFetching.ApiFetch(mapList);
             BuildWebHost(args).Run();
