@@ -1,8 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Data.SqlClient;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace PoEMap.Classes
 {

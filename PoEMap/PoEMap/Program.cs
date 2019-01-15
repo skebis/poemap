@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using PoEMap.Classes;
 
 namespace PoEMap
@@ -16,11 +9,9 @@ namespace PoEMap
 
         public static void Main(string[] args)
         {
-            Maplist mapList = new Maplist();
-
+            Maplist maplist = new Maplist();
             //mapList = ReadFile.ReadMapsFromFile();
-
-            ApiFetching.ApiFetch(mapList);
+            ApiFetching.ApiFetch(maplist);
             BuildWebHost(args).Run();
         }
 

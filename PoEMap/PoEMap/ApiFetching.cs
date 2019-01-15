@@ -27,7 +27,8 @@ namespace PoEMap
         public static async void ApiFetch(Maplist maplist)
         {
             // Testing
-            nextId = "283667914-294606306-277613284-318429055-300566765"; // ReadFile.ReadNextIdFromFile();
+            nextId = "283667914-294606306-277613284-318429055-300566765"; 
+            // ReadFile.ReadNextIdFromFile();
 
             SetNextAddress();
 

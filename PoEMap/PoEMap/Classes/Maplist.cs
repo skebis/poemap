@@ -1,9 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using System.Data.SqlClient;
 using System.Collections.Generic;
+using System.IO;
 
 namespace PoEMap.Classes
 {
@@ -14,19 +13,17 @@ namespace PoEMap.Classes
     public class Maplist
     {
         // List of maps that fulfill the conditions in user-made search.
-        private List<Map> searchedMaps = new List<Map>();
+        // private List<Map> searchedMaps = new List<Map>();
 
         // List of all stashes.
-        private List<Stash> stashes = new List<Stash>();
-
-        private IConfiguration configuration;
+         private List<Stash> stashes = new List<Stash>();
 
         /// <summary>
         /// Constructor for Maplist.
         /// </summary>
-        public Maplist(IConfiguration Configuration)
+        public Maplist()
         {
-            configuration = Configuration;
+            // Nothing needed here.
         }
         
         /// <summary>
@@ -73,21 +70,10 @@ namespace PoEMap.Classes
         /// Stores all map-items from API to stash-objects adds them to stashes-list.
         /// </summary>
         /// <param name="jsoncontent">Json which is stored in JArray -type.</param>
-        public void StoreMaps(JArray jsonStashes)
+        public async void StoreMaps(JArray jsonStashes)
         {
             try
             {
-                // Testing sql connection!
-                string conString = ConfigurationExtensions
-                    .GetConnectionString(configuration, "DefaultConnection");
-
-                using (SqlConnection sqlCon = new SqlConnection(conString))
-                {
-                    sqlCon.Open();
-                    Console.WriteLine("Connection opened!");
-                }
-                Console.WriteLine("Connection should be closed!");
-
                 foreach (JObject jsonStash in jsonStashes) {
 
                     Stash currentStash = new Stash();
@@ -120,6 +106,19 @@ namespace PoEMap.Classes
                     {
                         stashes.Remove(currentStash);
                     }
+                    // Start serializing the new stash-object and add it to json file.
+                    // TODO: best method to object -> json and append new jobject to existing json.
+                    JObject currentStashJOb = (JObject)JToken.FromObject(currentStash);
+
+                    using (StreamWriter sw = new StreamWriter("stashes.json"))
+                    {
+                        using (JsonTextWriter writer = new JsonTextWriter(sw))
+                        {
+                            await currentStashJOb.WriteToAsync(writer);
+                        }
+                    }
+
+                    
                 }
 
             } catch (Exception e) { Console.WriteLine(e.Message); }
