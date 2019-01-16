@@ -11,7 +11,7 @@ namespace PoEMap.Classes
         public string StashId { get; set; }
         public string Seller { get; set; }
         public string StashName { get; set; }
-        public List<Map> Maps = new List<Map>();
+        private List<Map> Maps = new List<Map>();
 
         /// <summary>
         /// Constructor for empty stash-object.
@@ -40,6 +40,25 @@ namespace PoEMap.Classes
         public void Empty()
         {
             Maps.Clear();
+        }
+
+        /// <summary>
+        /// Getter for maps-list.
+        /// </summary>
+        /// <returns>List of maps in this stash.</returns>
+        public List<Map> GetMaps()
+        {
+            return Maps;
+        }
+
+        /// <summary>
+        /// Checks if the stashes have the same id.
+        /// </summary>
+        /// <param name="jsonStash">Stash to compare.</param>
+        /// <returns>True if it was the same, false if not.</returns>
+        public bool HasSameId(JObject jsonStash)
+        {
+            return StashId.Equals((string)jsonStash.SelectToken("id"));
         }
 
         /// <summary>

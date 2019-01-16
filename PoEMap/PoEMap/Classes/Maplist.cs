@@ -3,11 +3,12 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace PoEMap.Classes
 {
     /// <summary>
-    /// Maplist-class which holds the list of all maps and any sub-lists for future searching-function.
+    /// Maplist-class with all stashes that contain maps.
     /// </summary>
     
     public class Maplist
@@ -37,9 +38,14 @@ namespace PoEMap.Classes
             if (stashes != null && stashes.Count != 0)
             {
                 // Find the same stash (with the same id and owner) from the stashes-list.
+
+                /*var queryStash = from stash in stashes
+                    where stash.StashId == (string)jsonStash.SelectToken("id")
+                    select stash;*/
+
                 foreach (Stash stash in stashes)
                 {
-                    if ((string)jsonStash.SelectToken("id") == stash.StashId)
+                    if (stash.HasSameId(jsonStash))
                     {
                         return stash;
                     }
@@ -70,57 +76,51 @@ namespace PoEMap.Classes
         /// Stores all map-items from API to stash-objects adds them to stashes-list.
         /// </summary>
         /// <param name="jsoncontent">Json which is stored in JArray -type.</param>
-        public async void StoreMaps(JArray jsonStashes)
+        public async void StoreMaps(JObject jsonStash)
         {
             try
             {
-                foreach (JObject jsonStash in jsonStashes) {
+                Stash currentStash = new Stash();
 
-                    Stash currentStash = new Stash();
-                    currentStash = StashToUse(jsonStash);
+                currentStash = StashToUse(jsonStash);
 
-                    JArray itemsArray = (JArray)jsonStash.SelectToken("items");
+                JArray itemsArray = (JArray)jsonStash.SelectToken("items");
 
-                    // If the stash is empty, there is no need to keep record of it until it appears again.
-                    if (itemsArray == null || itemsArray.Count == 0)
-                    {
-                        stashes.Remove(currentStash);
-                        continue;
-                    }
-                    else
-                    {
-                        // Empty the current stash and update it with the items from the JSON.
-                        currentStash.Empty();
-                        foreach (JObject item in itemsArray)
-                        {
-
-                            JObject category = item.Value<JObject>("category");
-                            if (category.ContainsKey("maps"))
-                            {
-                                currentStash.AddMap(item);
-                            }
-                        }
-                    }
-                    // If the stash didn't contain any map-items, it can be deleted.
-                    if (currentStash.Maps == null || currentStash.Maps.Count == 0)
-                    {
-                        stashes.Remove(currentStash);
-                    }
-                    // Start serializing the new stash-object and add it to json file.
-                    // TODO: best method to object -> json and append new jobject to existing json.
-                    JObject currentStashJOb = (JObject)JToken.FromObject(currentStash);
-
-                    using (StreamWriter sw = new StreamWriter("stashes.json"))
-                    {
-                        using (JsonTextWriter writer = new JsonTextWriter(sw))
-                        {
-                            await currentStashJOb.WriteToAsync(writer);
-                        }
-                    }
-
-                    
+                // If the stash is empty, there is no need to keep record of it until it appears again.
+                if (itemsArray == null || itemsArray.Count == 0)
+                {
+                    stashes.Remove(currentStash);
+                    return;
                 }
+                else
+                {
+                    // Empty the current stash and update it with the items from the JSON.
+                    currentStash.Empty();
+                    foreach (JObject item in itemsArray)
+                    {
+                        JObject category = item.Value<JObject>("category");
+                        if (category.ContainsKey("maps"))
+                        {
+                            currentStash.AddMap(item);
+                        }
+                    }
+                }
+                // If the stash didn't contain any map-items, it can be deleted.
+                if (currentStash.GetMaps() == null || currentStash.GetMaps().Count == 0)
+                {
+                    stashes.Remove(currentStash);
+                }
+                // Start serializing the new stash-object and add it to json file.
+                // TODO: best method to object -> json and append new jobject to existing json.
+                //JObject currentStashJOb = (JObject)JToken.FromObject(currentStash);
 
+                /*using (StreamWriter sw = new StreamWriter("stashes.json"))
+                {
+                    using (JsonTextWriter writer = new JsonTextWriter(sw))
+                    {
+                        await currentStashJOb.WriteToAsync(writer);
+                    }
+                }*/    
             } catch (Exception e) { Console.WriteLine(e.Message); }
         }
     }

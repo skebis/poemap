@@ -1,6 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PoEMap.Classes;
 using System;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -27,7 +29,7 @@ namespace PoEMap
         public static async void ApiFetch(Maplist maplist)
         {
             // Testing
-            nextId = "283667914-294606306-277613284-318429055-300566765"; 
+            nextId = "328227083-339783020-320873223-367797605-347556172"; 
             // ReadFile.ReadNextIdFromFile();
 
             SetNextAddress();
@@ -36,19 +38,29 @@ namespace PoEMap
             {
                 // Print the current ID for debugging and testing.
                 Console.WriteLine("Started parsing API with id " + nextId);
+                
                 try
                 {
-                    Task<string> taskJsonContent = httpClient.GetStringAsync(nextAddress);
+                    using (Stream s = httpClient.GetStreamAsync(nextAddress).Result)
+                    using (StreamReader sr = new StreamReader(s))
+                    using (JsonReader jreader = new JsonTextReader(sr))
+                    {
+                        JsonSerializer serializer = new JsonSerializer();
+                        JObject jsonContent = (JObject)serializer.Deserialize(jreader);
 
-                    string stringJsonContent = await taskJsonContent;
-                    JObject jsonContent = JObject.Parse(stringJsonContent);
+                        //string stringJsonContent = await httpClient.GetStringAsync(nextAddress);
 
-                    JArray jsonStashes = (JArray)jsonContent.SelectToken("stashes");
-                    maplist.StoreMaps(jsonStashes);
+                        //JObject jsonContent = JObject.Parse(stringJsonContent);
 
-                    // Get the next id from the current API and set it to next address.
-                    nextId = (string)jsonContent.SelectToken("next_change_id");
-                    SetNextAddress();
+                        JArray jsonStashes = (JArray)jsonContent.SelectToken("stashes");
+                        foreach (JObject jsonStash in jsonStashes)
+                        {
+                            maplist.StoreMaps(jsonStash);
+                        }
+                        // Get the next id from the current API and set it to next address.
+                        nextId = (string)jsonContent.SelectToken("next_change_id");
+                        SetNextAddress();
+                    }
                 } catch (Exception e)
                 {
                     // Make sure to not continue making too frequent requests.
