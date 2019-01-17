@@ -9,9 +9,26 @@ namespace PoEMap
 
         public static void Main(string[] args)
         {
-            Maplist maplist = new Maplist();
+            /*var host = CreateWebHostBuilder(args).Build();
+
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                try
+                {
+                    var context = services.GetRequiredService<SchoolContext>();
+                    context.Database.EnsureCreated();
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred creating the DB.");
+                }
+            }*/
+            StashContext stashContext = new StashContext();
             //mapList = ReadFile.ReadMapsFromFile();
-            ApiFetching.ApiFetch(maplist);
+            ApiFetching.ApiFetch(stashContext);
             BuildWebHost(args).Run();
         }
 

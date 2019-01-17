@@ -11,7 +11,7 @@ namespace PoEMap.Classes
         public string StashId { get; set; }
         public string Seller { get; set; }
         public string StashName { get; set; }
-        private List<Map> Maps = new List<Map>();
+        private ICollection<Map> Maps { get; set; }
 
         /// <summary>
         /// Constructor for empty stash-object.
@@ -46,7 +46,7 @@ namespace PoEMap.Classes
         /// Getter for maps-list.
         /// </summary>
         /// <returns>List of maps in this stash.</returns>
-        public List<Map> GetMaps()
+        public ICollection<Map> GetMaps()
         {
             return Maps;
         }

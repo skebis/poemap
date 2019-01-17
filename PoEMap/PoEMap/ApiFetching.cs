@@ -25,11 +25,13 @@ namespace PoEMap
         /// <summary>
         /// Asyncronously fetches data from the API.
         /// </summary>
-        /// <param name="maplist">Main list of all maps.</param>
-        public static async void ApiFetch(Maplist maplist)
+        /// <param name="stashContext">Main list of all maps.</param>
+        public static async void ApiFetch(StashContext stashContext)
         {
+            // Let our web service start before we start fetching data.
+            await Task.Delay(timeDelay * 10);
             // Testing
-            nextId = "328227083-339783020-320873223-367797605-347556172"; 
+            nextId = "328231349-339788986-320879142-367803389-347562285";
             // ReadFile.ReadNextIdFromFile();
 
             SetNextAddress();
@@ -38,30 +40,47 @@ namespace PoEMap
             {
                 // Print the current ID for debugging and testing.
                 Console.WriteLine("Started parsing API with id " + nextId);
-                
+
                 try
                 {
-                    using (Stream s = httpClient.GetStreamAsync(nextAddress).Result)
-                    using (StreamReader sr = new StreamReader(s))
-                    using (JsonReader jreader = new JsonTextReader(sr))
+                    /*using (Stream s = httpClient.GetStreamAsync(nextAddress).Result)
                     {
-                        JsonSerializer serializer = new JsonSerializer();
-                        JObject jsonContent = (JObject)serializer.Deserialize(jreader);
-
-                        //string stringJsonContent = await httpClient.GetStringAsync(nextAddress);
-
-                        //JObject jsonContent = JObject.Parse(stringJsonContent);
-
-                        JArray jsonStashes = (JArray)jsonContent.SelectToken("stashes");
-                        foreach (JObject jsonStash in jsonStashes)
+                        using (StreamReader sr = new StreamReader(s))
                         {
-                            maplist.StoreMaps(jsonStash);
-                        }
-                        // Get the next id from the current API and set it to next address.
-                        nextId = (string)jsonContent.SelectToken("next_change_id");
-                        SetNextAddress();
+                            using (JsonReader jreader = new JsonTextReader(sr))
+                            {
+                                //JsonSerializer serializer = new JsonSerializer();
+                                while (jreader.Read())
+                                {
+                                    if (jreader.Value != null)
+                                    {
+                                        Console.WriteLine("Token: {0}, Value: {1}", jreader.TokenType, jreader.Value);
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Token: {0}", jreader.TokenType);
+                                    }*/
+
+                    //JObject jsonContent = JObject.Parse(nextContent);
+                    //JObject jsonContent = (JObject)serializer.Deserialize(jreader);
+                    string stringJsonContent = await httpClient.GetStringAsync(nextAddress);
+
+                    JObject jsonContent = JObject.Parse(stringJsonContent);
+
+                    JArray jsonStashes = (JArray)jsonContent.SelectToken("stashes");
+                    foreach (JObject jsonStash in jsonStashes)
+                    {
+                        stashContext.StoreMaps(jsonStash);
                     }
-                } catch (Exception e)
+                    //}
+                    // Get the next id from the current API and set it to next address.
+                    nextId = (string)jsonContent.SelectToken("next_change_id");
+                    SetNextAddress();
+                    //}
+                    //}
+                    //}
+                }
+                catch (Exception e)
                 {
                     // Make sure to not continue making too frequent requests.
                     string errMsg = e.Message;

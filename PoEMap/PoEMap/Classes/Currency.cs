@@ -52,11 +52,14 @@ namespace PoEMap.Classes
         {
             try
             {
-                // Gets rid of "~b/o" or "~price" part of the price.
+                // Gets rid of "~b/o " or "~price " part of the price.
                 string clearPrice = price.Substring(price.IndexOf(' ') + 1);
                 // Creates a string array which holds the number at [0] and the used currency item at [1].
                 string[] numberAndPrice = clearPrice.Split(' ');
-
+                if (numberAndPrice.Length < 2)
+                {
+                    return "Undefined";
+                }
                 string number = numberAndPrice[0];
                 string orb = numberAndPrice[1];
                 // TODO: Testing

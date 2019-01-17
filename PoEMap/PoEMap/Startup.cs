@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PoEMap.Classes;
 
 namespace PoEMap
 {
@@ -19,6 +21,9 @@ namespace PoEMap
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.AddDbContext<StashContext>
+                (options => options.UseSqlServer(Configuration.GetConnectionString("PoemapDatabase")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
