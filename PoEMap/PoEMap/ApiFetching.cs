@@ -18,6 +18,10 @@ namespace PoEMap
         private static string nextAddress = "http://www.pathofexile.com/api/public-stash-tabs";
         // Base delay between every web request (1.5 seconds).
         private static readonly int timeDelay = 1500;
+        // Initial delay when starting the application (15 seconds).
+        private static readonly int initialDelay = 15000;
+        // Delay if we got error for too many requests.
+        private static readonly int floodDelay = 20000;
         // Set data fetching to be always on.
         private static bool fetching = true;
         private static string nextId;
@@ -29,7 +33,7 @@ namespace PoEMap
         public static async void ApiFetch(StashContext stashContext)
         {
             // Let our web service start before we start fetching data.
-            await Task.Delay(timeDelay * 10);
+            await Task.Delay(initialDelay);
             // Testing
             nextId = "328231349-339788986-320879142-367803389-347562285";
             // ReadFile.ReadNextIdFromFile();
@@ -43,26 +47,6 @@ namespace PoEMap
 
                 try
                 {
-                    /*using (Stream s = httpClient.GetStreamAsync(nextAddress).Result)
-                    {
-                        using (StreamReader sr = new StreamReader(s))
-                        {
-                            using (JsonReader jreader = new JsonTextReader(sr))
-                            {
-                                //JsonSerializer serializer = new JsonSerializer();
-                                while (jreader.Read())
-                                {
-                                    if (jreader.Value != null)
-                                    {
-                                        Console.WriteLine("Token: {0}, Value: {1}", jreader.TokenType, jreader.Value);
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("Token: {0}", jreader.TokenType);
-                                    }*/
-
-                    //JObject jsonContent = JObject.Parse(nextContent);
-                    //JObject jsonContent = (JObject)serializer.Deserialize(jreader);
                     string stringJsonContent = await httpClient.GetStringAsync(nextAddress);
 
                     JObject jsonContent = JObject.Parse(stringJsonContent);
@@ -72,23 +56,19 @@ namespace PoEMap
                     {
                         stashContext.StoreMaps(jsonStash);
                     }
-                    //}
                     // Get the next id from the current API and set it to next address.
                     nextId = (string)jsonContent.SelectToken("next_change_id");
                     SetNextAddress();
-                    //}
-                    //}
-                    //}
                 }
                 catch (Exception e)
                 {
-                    // Make sure to not continue making too frequent requests.
+                    // If we somehow made too many requests, make sure to not continue it.
                     string errMsg = e.Message;
                     switch (errMsg)
                     {
                         // Maybe regex to check only "429".
                         case "Response status code does not indicate success: 429 (Too Many Requests).":
-                            await Task.Delay(timeDelay * 20);
+                            await Task.Delay(floodDelay);
                             break;
 
                         default:

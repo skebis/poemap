@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PoEMap.Classes
 {
@@ -7,13 +9,20 @@ namespace PoEMap.Classes
     /// </summary>
     public class Map
     {
-        public string ItemId { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int MapId { get; set; }
+
+        // Testing related data!!
+        public int StashId { get; set; }
+        public Stash Stash { get; set; }
+        // Testing ends!!
+
         public string MapName { get; set; }
         public string Note { get; set; }
-        public Currency Price { get; set; }
+        public string Price { get; set; }
         public string League { get; set; }
         // icon maybe not needed.
-        public Uri IconAddress { get; set; }
+        public string IconAddress { get; set; }
 
         /// <summary>
         /// Constructor for empty map-object.
@@ -30,11 +39,10 @@ namespace PoEMap.Classes
         /// <param name="mapname">Name of the map.</param>
         /// <param name="defaultPrice">Price.</param>
         /// <param name="league">League where the item is.</param>
-        public Map (string itemid, string mapname, Currency defaultPrice, string league)
+        public Map (int itemid, string mapname, string league)
         {
-            ItemId = itemid;
+            MapId = itemid;
             MapName = mapname;
-            Price = defaultPrice;
             League = league;
         }
 
@@ -44,7 +52,7 @@ namespace PoEMap.Classes
         /// <param name="price">Price.</param>
         public void SetPrice(string price)
         {
-            Price.SetPrice(price);
+            Price = Currency.SetPrice(price);
         }
 
         /// <summary>
@@ -52,7 +60,7 @@ namespace PoEMap.Classes
         /// </summary>
         public void SetNoPrice()
         {
-            Price.SetNoPrice();
+            Price = Currency.SetNoPrice();
         }
     }
 }

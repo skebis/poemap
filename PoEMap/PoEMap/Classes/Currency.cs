@@ -3,44 +3,28 @@
 namespace PoEMap.Classes
 {
     /// <summary>
-    /// Currency-structure to store the currency and the number of the used currency. Basically the price.
+    /// Currency-structure to return valid price for map.
     /// </summary>
-    public class Currency
+    public static class Currency
     {
-        public string PriceString { get; set; }
-
-        /// <summary>
-        /// Constructor for empty currency-object.
-        /// </summary>
-        public Currency()
-        {
-            // Nothing needed here.
-        }
-
-        /// <summary>
-        /// Constructor for currency / price of the item.
-        /// </summary>
-        /// <param name="price"></param>
-        public Currency(string price)
-        {
-            PriceString = price;
-        }
 
         /// <summary>
         /// Sets the price to "undefined".
         /// </summary>
-        public void SetNoPrice()
+        /// <return>Returns undefined.</return>
+        public static string SetNoPrice()
         {
-            PriceString = "Undefined";
+            return "Undefined";
         }
 
         /// <summary>
         /// Setter for price.
         /// </summary>
         /// <param name="price">Usually the price of the item. Example: "~b/o 2 chaos" or "~price 1 alt".</param>
-        public void SetPrice(string price)
+        /// <returns>Returns valid price. Example: "2 Chaos Orb".</returns>
+        public static string SetPrice(string price)
         {
-            PriceString = CreateValidPrice(price);
+            return CreateValidPrice(price);
         }
 
         /// <summary>
@@ -48,7 +32,7 @@ namespace PoEMap.Classes
         /// </summary>
         /// <param name="price">Price in note-format.</param>
         /// <returns>Price in modified format.</returns>
-        public string CreateValidPrice(string price)
+        public static string CreateValidPrice(string price)
         {
             try
             {

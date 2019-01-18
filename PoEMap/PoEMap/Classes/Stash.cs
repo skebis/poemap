@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PoEMap.Classes
 {
@@ -8,10 +10,12 @@ namespace PoEMap.Classes
     /// </summary>
     public class Stash
     {
-        public string StashId { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int StashId { get; set; }
+
         public string Seller { get; set; }
         public string StashName { get; set; }
-        private ICollection<Map> Maps { get; set; }
+        public ICollection<Map> Maps { get; set; }
 
         /// <summary>
         /// Constructor for empty stash-object.
@@ -27,7 +31,7 @@ namespace PoEMap.Classes
         /// <param name="id">Stash id.</param>
         /// <param name="lastCharName">Owner or seller.</param>
         /// <param name="stashPrice"></param>
-        public Stash(string id, string lastCharName, string stashName)
+        public Stash(int id, string lastCharName, string stashName)
         {
             StashId = id;
             Seller = lastCharName;
@@ -43,22 +47,13 @@ namespace PoEMap.Classes
         }
 
         /// <summary>
-        /// Getter for maps-list.
-        /// </summary>
-        /// <returns>List of maps in this stash.</returns>
-        public ICollection<Map> GetMaps()
-        {
-            return Maps;
-        }
-
-        /// <summary>
         /// Checks if the stashes have the same id.
         /// </summary>
         /// <param name="jsonStash">Stash to compare.</param>
         /// <returns>True if it was the same, false if not.</returns>
         public bool HasSameId(JObject jsonStash)
         {
-            return StashId.Equals((string)jsonStash.SelectToken("id"));
+            return StashId.Equals((int)jsonStash.SelectToken("id"));
         }
 
         /// <summary>
@@ -68,9 +63,8 @@ namespace PoEMap.Classes
         public void AddMap(JObject item)
         {
             Map newMap = new Map(
-                (string)item.SelectToken("id"),
+                (int)item.SelectToken("id"),
                 (string)item.SelectToken("typeLine"),
-                new Currency(),
                 (string)item.SelectToken("league"));
 
             string price = "";

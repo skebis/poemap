@@ -14,19 +14,17 @@ namespace PoEMap.Classes
     
     public class StashContext : DbContext
     {
-        // List of maps that fulfill the conditions in user-made search.
-        // private List<Map> searchedMaps = new List<Map>();
-
         // Testing DB!
         public StashContext(DbContextOptions<StashContext> options)
         : base(options)
         { }
 
         public DbSet<Stash> StashesDb { get; set; }
+        public DbSet<Map> MapsDb { get; set; }
         // Testing DB ends!
         
-        // List of all stashes !!!!!Collection vs List.!!!!!
-        private ICollection<Stash> Stashes { get; set; }
+        // shouldn't be needed anymore
+        public ICollection<Stash> Stashes { get; set; }
 
         /// <summary>
         /// Constructor for Maplist.
@@ -73,7 +71,7 @@ namespace PoEMap.Classes
         public Stash CreateNewStash(JObject jsonStash)
         {
             Stash newStash = new Stash(
-                (string)jsonStash.SelectToken("id"),
+                (int)jsonStash.SelectToken("id"),
                 (string)jsonStash.SelectToken("lastCharacterName"),
                 (string)jsonStash.SelectToken("stash"));
             Stashes.Add(newStash);
@@ -115,13 +113,13 @@ namespace PoEMap.Classes
                     }
                 }
                 // If the stash didn't contain any map-items, it can be deleted.
-                if (currentStash.GetMaps() == null || currentStash.GetMaps().Count == 0)
+                if (currentStash.Maps == null || currentStash.Maps.Count == 0)
                 {
                     Stashes.Remove(currentStash);
                 }
                 // Start serializing the new stash-object and add it to json file.
                 // TODO: best method to object -> json and append new jobject to existing json.
-                JObject currentStashJOb = (JObject)JToken.FromObject(currentStash);
+                /*JObject currentStashJOb = (JObject)JToken.FromObject(currentStash);
 
                 using (StreamWriter sw = new StreamWriter("stashes.json"))
                 {
@@ -129,7 +127,7 @@ namespace PoEMap.Classes
                     {
                         await currentStashJOb.WriteToAsync(writer);
                     }
-                }
+                }*/
             } catch (Exception e)
             {
                 Console.WriteLine(e.Message);
