@@ -12924,6 +12924,7 @@
       "Microsoft.EntityFrameworkCore.Design >= 2.2.1",
       "Microsoft.EntityFrameworkCore.Sqlite >= 2.2.1",
       "Microsoft.EntityFrameworkCore.Tools >= 2.0.3",
+      "Microsoft.Extensions.DependencyInjection.Abstractions >= 2.2.0",
       "Microsoft.NETCore.App >= 2.0.0",
       "Newtonsoft.Json >= 11.0.2",
       "System.Configuration.ConfigurationManager >= 4.5.0",
@@ -12988,6 +12989,10 @@
             "suppressParent": "All",
             "target": "Package",
             "version": "[2.0.3, )"
+          },
+          "Microsoft.Extensions.DependencyInjection.Abstractions": {
+            "target": "Package",
+            "version": "[2.2.0, )"
           },
           "Microsoft.NETCore.App": {
             "target": "Package",

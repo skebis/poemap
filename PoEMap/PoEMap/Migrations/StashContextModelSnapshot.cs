@@ -17,7 +17,7 @@ namespace PoEMap.Migrations
 
             modelBuilder.Entity("PoEMap.Classes.Map", b =>
                 {
-                    b.Property<int>("MapId");
+                    b.Property<string>("MapId");
 
                     b.Property<string>("IconAddress");
 
@@ -29,7 +29,7 @@ namespace PoEMap.Migrations
 
                     b.Property<string>("Price");
 
-                    b.Property<int>("StashId");
+                    b.Property<string>("StashId");
 
                     b.HasKey("MapId");
 
@@ -40,7 +40,7 @@ namespace PoEMap.Migrations
 
             modelBuilder.Entity("PoEMap.Classes.Stash", b =>
                 {
-                    b.Property<int>("StashId");
+                    b.Property<string>("StashId");
 
                     b.Property<string>("Seller");
 
@@ -55,8 +55,7 @@ namespace PoEMap.Migrations
                 {
                     b.HasOne("PoEMap.Classes.Stash", "Stash")
                         .WithMany("Maps")
-                        .HasForeignKey("StashId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("StashId");
                 });
 #pragma warning restore 612, 618
         }

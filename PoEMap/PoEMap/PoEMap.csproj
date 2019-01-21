@@ -3,10 +3,19 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Migrations\20190118135809_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190118135809_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20190121114919_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190121114919_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20190121141508_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190121141508_InitialCreate.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
 	<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.1" />
 	<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.1" />
 	<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.3" PrivateAssets="All" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.6.0" />

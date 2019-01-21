@@ -46,7 +46,7 @@ namespace PoEMap.Classes
                 }
                 string number = numberAndPrice[0];
                 string orb = numberAndPrice[1];
-                // TODO: Testing
+                // Tested in-game
 
                 switch (numberAndPrice[1])
                 {

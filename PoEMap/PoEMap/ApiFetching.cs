@@ -1,8 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Linq;
 using PoEMap.Classes;
 using System;
-using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -29,8 +28,7 @@ namespace PoEMap
         /// <summary>
         /// Asyncronously fetches data from the API.
         /// </summary>
-        /// <param name="stashContext">Main list of all maps.</param>
-        public static async void ApiFetch(StashContext stashContext)
+        public static async void ApiFetch()
         {
             // Let our web service start before we start fetching data.
             await Task.Delay(initialDelay);
@@ -52,10 +50,13 @@ namespace PoEMap
                     JObject jsonContent = JObject.Parse(stringJsonContent);
 
                     JArray jsonStashes = (JArray)jsonContent.SelectToken("stashes");
-                    foreach (JObject jsonStash in jsonStashes)
+
+                    using (var db = new StashContext())
                     {
-                        stashContext.StoreMaps(jsonStash);
+                        db.StoreMaps(jsonStashes);
+                        db.SaveChanges();
                     }
+
                     // Get the next id from the current API and set it to next address.
                     nextId = (string)jsonContent.SelectToken("next_change_id");
                     SetNextAddress();

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using PoEMap.Classes;
 
 namespace PoEMap
 {
@@ -9,9 +8,7 @@ namespace PoEMap
 
         public static void Main(string[] args)
         {
-            StashContext stashContext = new StashContext();
-            //mapList = ReadFile.ReadMapsFromFile();
-            ApiFetching.ApiFetch(stashContext);
+            ApiFetching.ApiFetch();
             BuildWebHost(args).Run();
         }
 

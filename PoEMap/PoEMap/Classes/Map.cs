@@ -10,10 +10,10 @@ namespace PoEMap.Classes
     public class Map
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int MapId { get; set; }
+        public string MapId { get; set; }
 
         // Testing related data!!
-        public int StashId { get; set; }
+        public string StashId { get; set; }
         public Stash Stash { get; set; }
         // Testing ends!!
 
@@ -39,7 +39,7 @@ namespace PoEMap.Classes
         /// <param name="mapname">Name of the map.</param>
         /// <param name="defaultPrice">Price.</param>
         /// <param name="league">League where the item is.</param>
-        public Map (int itemid, string mapname, string league)
+        public Map (string itemid, string mapname, string league)
         {
             MapId = itemid;
             MapName = mapname;

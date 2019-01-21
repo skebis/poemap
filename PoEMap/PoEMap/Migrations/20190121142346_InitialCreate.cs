@@ -10,7 +10,7 @@ namespace PoEMap.Migrations
                 name: "StashesDb",
                 columns: table => new
                 {
-                    StashId = table.Column<int>(nullable: false),
+                    StashId = table.Column<string>(nullable: false),
                     Seller = table.Column<string>(nullable: true),
                     StashName = table.Column<string>(nullable: true)
                 },
@@ -23,8 +23,8 @@ namespace PoEMap.Migrations
                 name: "MapsDb",
                 columns: table => new
                 {
-                    MapId = table.Column<int>(nullable: false),
-                    StashId = table.Column<int>(nullable: false),
+                    MapId = table.Column<string>(nullable: false),
+                    StashId = table.Column<string>(nullable: true),
                     MapName = table.Column<string>(nullable: true),
                     Note = table.Column<string>(nullable: true),
                     Price = table.Column<string>(nullable: true),
@@ -39,7 +39,7 @@ namespace PoEMap.Migrations
                         column: x => x.StashId,
                         principalTable: "StashesDb",
                         principalColumn: "StashId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

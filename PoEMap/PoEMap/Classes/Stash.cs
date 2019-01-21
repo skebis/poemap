@@ -11,7 +11,7 @@ namespace PoEMap.Classes
     public class Stash
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int StashId { get; set; }
+        public string StashId { get; set; }
 
         public string Seller { get; set; }
         public string StashName { get; set; }
@@ -22,7 +22,7 @@ namespace PoEMap.Classes
         /// </summary>
         public Stash()
         {
-            // Nothing needed here.
+            Maps = new List<Map>();
         }
 
         /// <summary>
@@ -31,11 +31,21 @@ namespace PoEMap.Classes
         /// <param name="id">Stash id.</param>
         /// <param name="lastCharName">Owner or seller.</param>
         /// <param name="stashPrice"></param>
-        public Stash(int id, string lastCharName, string stashName)
+        public Stash(string id, string lastCharName, string stashName)
         {
             StashId = id;
             Seller = lastCharName;
             StashName = stashName;
+            Maps = new List<Map>();
+        }
+
+        /// <summary>
+        /// Returns the map count of currently processed stash.
+        /// </summary>
+        /// <returns>Map count.</returns>
+        public int MapCount()
+        {
+            return Maps.Count;
         }
 
         /// <summary>
@@ -47,23 +57,13 @@ namespace PoEMap.Classes
         }
 
         /// <summary>
-        /// Checks if the stashes have the same id.
-        /// </summary>
-        /// <param name="jsonStash">Stash to compare.</param>
-        /// <returns>True if it was the same, false if not.</returns>
-        public bool HasSameId(JObject jsonStash)
-        {
-            return StashId.Equals((int)jsonStash.SelectToken("id"));
-        }
-
-        /// <summary>
         /// Adds the new map to the list.
         /// </summary>
         /// <param name="item">Current map item.</param>
         public void AddMap(JObject item)
         {
             Map newMap = new Map(
-                (int)item.SelectToken("id"),
+                (string)item.SelectToken("id"),
                 (string)item.SelectToken("typeLine"),
                 (string)item.SelectToken("league"));
 
