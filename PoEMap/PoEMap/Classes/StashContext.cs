@@ -10,7 +10,6 @@ namespace PoEMap.Classes
 
     public class StashContext : DbContext
     {
-        // Testing DB!
         public DbSet<Stash> StashesDb { get; set; }
         public DbSet<Map> MapsDb { get; set; }
 
@@ -18,29 +17,9 @@ namespace PoEMap.Classes
         {
             optionsBuilder.UseSqlite("Data Source=maps.db");
         }
-        // Testing DB ends!
 
         /// <summary>
-        /// Searches if the currently processed stash is already in the database and uses the stash from the database if it exists. Otherwise creates a new stash-object.
-        /// </summary>
-        /// <param name="jsonStash">Currently processed stash from the json.</param>
-        /// <returns>Stash-object to work with.</returns>
-        public Stash StashToUse(JObject jsonStash)
-        {
-            string currentStashId = (string)jsonStash.SelectToken("id");
-
-            // Searches if the stash exists in the database and uses it. Otherwise creates a new Stash object.
-            Stash stashFromDb = StashesDb.Find(currentStashId);
-
-            if (stashFromDb == null)
-            {
-                return CreateNewStash(jsonStash);
-            }
-            else return stashFromDb;
-        }
-
-        /// <summary>
-        /// Creates a new stash-object and initializes it with an id and owner.
+        /// Creates a new stash-object and initializes it with an id, owner and (stash)name.
         /// </summary>
         /// <param name="jsonStash">Currently processed stash.</param>
         /// <returns>New stash object.</returns>
@@ -55,9 +34,9 @@ namespace PoEMap.Classes
         }
 
         /// <summary>
-        /// Stores all map-items from API to stash-objects adds them to stashes-list.
+        /// Stores all map-items from json to stash-objects adds them to database. Doesn't add empty stashes.
         /// </summary>
-        /// <param name="jsoncontent">Json which is stored in JArray -type.</param>
+        /// <param name="jsonStashes">Stashes as JArray-type.</param>
         public async void StoreMaps(JArray jsonStashes)
         {
             try
@@ -65,35 +44,39 @@ namespace PoEMap.Classes
                 Stash currentStash;
                 foreach (JObject jsonStash in jsonStashes)
                 {
-                    currentStash = StashToUse(jsonStash);
-
+                    // First let's check if the stash contains any items. If it doesn't, remove that stash from the database if it exists.
                     JArray itemsArray = (JArray)jsonStash.SelectToken("items");
+                    Stash stashFromDb = StashesDb.Find((string)jsonStash.SelectToken("id"));
 
-                    // If the json-stash is empty, there is no need to keep record of it until it appears again.
-                    if (itemsArray == null || itemsArray.Count == 0)
+                    currentStash = CreateNewStash(jsonStash);
+                    foreach (JObject item in itemsArray)
                     {
-                        Remove(currentStash);
-                        continue;
-                    }
-                    else
-                    {
-                        // Empty the current stash and update it with the items from the JSON.
-                        currentStash.Empty();
-                        foreach (JObject item in itemsArray)
+                        JObject category = item.Value<JObject>("category");
+                        if (category.ContainsKey("maps"))
                         {
-                            JObject category = item.Value<JObject>("category");
-                            if (category.ContainsKey("maps"))
-                            {
-                                currentStash.AddMap(item);
-                            }
+                            currentStash.AddMap(item);
                         }
                     }
                     // If the stash didn't contain any map-items, it can be deleted.
                     if (currentStash.MapCount() == 0 || currentStash.Maps == null)
                     {
-                        Remove(currentStash);
+                        if (stashFromDb != null)
+                        {
+                            StashesDb.Remove(currentStash);
+                        }
+                        continue;
                     }
-                    else await AddAsync(currentStash);
+                    else
+                    {
+                        if (stashFromDb != null)
+                        {
+                            Entry(stashFromDb).CurrentValues.SetValues(currentStash);
+                        }
+                        else
+                        {
+                            await StashesDb.AddAsync(currentStash);
+                        }
+                    }
                 }
             }
             catch (Exception e)

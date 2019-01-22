@@ -51,10 +51,11 @@ namespace PoEMap
 
                     JArray jsonStashes = (JArray)jsonContent.SelectToken("stashes");
 
-                    using (var db = new StashContext())
+                    using (var context = new StashContext())
                     {
-                        db.StoreMaps(jsonStashes);
-                        db.SaveChanges();
+                        context.StoreMaps(jsonStashes);
+                        await context.SaveChangesAsync();
+
                     }
 
                     // Get the next id from the current API and set it to next address.
