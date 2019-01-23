@@ -2,6 +2,8 @@
 using Newtonsoft.Json.Linq;
 using PoEMap.Classes;
 using System;
+using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -24,6 +26,7 @@ namespace PoEMap
         // Set data fetching to be always on.
         private static bool fetching = true;
         private static string nextId;
+        private static readonly string nextIdFile = "nextid.txt";
 
         /// <summary>
         /// Asyncronously fetches data from the API.
@@ -32,10 +35,10 @@ namespace PoEMap
         {
             // Let our web service start before we start fetching data.
             await Task.Delay(initialDelay);
-            // Testing
-            nextId = "328231349-339788986-320879142-367803389-347562285";
-            // ReadFile.ReadNextIdFromFile();
-
+            /*if (File.Exists(nextIdFile))
+            {
+                nextId = File.ReadAllText(nextIdFile);
+            }*/
             SetNextAddress();
 
             while (fetching)
@@ -55,11 +58,18 @@ namespace PoEMap
                     {
                         context.StoreMaps(jsonStashes);
                         await context.SaveChangesAsync();
-
                     }
 
                     // Get the next id from the current API and set it to next address.
                     nextId = (string)jsonContent.SelectToken("next_change_id");
+                    /*if (!File.Exists(nextIdFile))
+                    {
+                        File.Create(nextIdFile);
+                    }
+                    else
+                    {
+                        File.WriteAllText(nextIdFile, nextId);
+                    }*/
                     SetNextAddress();
                 }
                 catch (Exception e)

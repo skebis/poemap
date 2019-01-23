@@ -11,6 +11,8 @@
     <Compile Remove="Migrations\20190121141508_InitialCreate.Designer.cs" />
     <Compile Remove="Migrations\20190121142346_InitialCreate.cs" />
     <Compile Remove="Migrations\20190121142346_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20190122141548_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190122141548_InitialCreate.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
 	<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.1" />

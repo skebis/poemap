@@ -15,14 +15,14 @@ namespace PoEMap.Classes
 
         public string Seller { get; set; }
         public string StashName { get; set; }
-        public ICollection<Map> Maps { get; set; }
+        public List<Map> Maps { get; set; }
 
         /// <summary>
         /// Constructor for empty stash-object.
         /// </summary>
         public Stash()
         {
-            Maps = new List<Map>();
+            //
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace PoEMap.Classes
         /// </summary>
         /// <param name="id">Stash id.</param>
         /// <param name="lastCharName">Owner or seller.</param>
-        /// <param name="stashPrice"></param>
+        /// <param name="stashName"></param>
         public Stash(string id, string lastCharName, string stashName)
         {
             StashId = id;

@@ -35,7 +35,7 @@ namespace PoEMap.Migrations
 
                     b.HasIndex("StashId");
 
-                    b.ToTable("MapsDb");
+                    b.ToTable("Maps");
                 });
 
             modelBuilder.Entity("PoEMap.Classes.Stash", b =>
@@ -48,14 +48,15 @@ namespace PoEMap.Migrations
 
                     b.HasKey("StashId");
 
-                    b.ToTable("StashesDb");
+                    b.ToTable("Stashes");
                 });
 
             modelBuilder.Entity("PoEMap.Classes.Map", b =>
                 {
                     b.HasOne("PoEMap.Classes.Stash", "Stash")
                         .WithMany("Maps")
-                        .HasForeignKey("StashId");
+                        .HasForeignKey("StashId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

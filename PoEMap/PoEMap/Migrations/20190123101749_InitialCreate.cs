@@ -7,7 +7,7 @@ namespace PoEMap.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "StashesDb",
+                name: "Stashes",
                 columns: table => new
                 {
                     StashId = table.Column<string>(nullable: false),
@@ -16,11 +16,11 @@ namespace PoEMap.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StashesDb", x => x.StashId);
+                    table.PrimaryKey("PK_Stashes", x => x.StashId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "MapsDb",
+                name: "Maps",
                 columns: table => new
                 {
                     MapId = table.Column<string>(nullable: false),
@@ -33,28 +33,28 @@ namespace PoEMap.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MapsDb", x => x.MapId);
+                    table.PrimaryKey("PK_Maps", x => x.MapId);
                     table.ForeignKey(
-                        name: "FK_MapsDb_StashesDb_StashId",
+                        name: "FK_Maps_Stashes_StashId",
                         column: x => x.StashId,
-                        principalTable: "StashesDb",
+                        principalTable: "Stashes",
                         principalColumn: "StashId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_MapsDb_StashId",
-                table: "MapsDb",
+                name: "IX_Maps_StashId",
+                table: "Maps",
                 column: "StashId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "MapsDb");
+                name: "Maps");
 
             migrationBuilder.DropTable(
-                name: "StashesDb");
+                name: "Stashes");
         }
     }
 }

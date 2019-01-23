@@ -10,12 +10,20 @@ namespace PoEMap.Classes
 
     public class StashContext : DbContext
     {
-        public DbSet<Stash> StashesDb { get; set; }
-        public DbSet<Map> MapsDb { get; set; }
+        public DbSet<Stash> Stashes { get; set; }
+        public DbSet<Map> Maps { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Data Source=maps.db");
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Map>()
+                .HasOne(p => p.Stash)
+                .WithMany(b => b.Maps)
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
         /// <summary>
@@ -46,7 +54,7 @@ namespace PoEMap.Classes
                 {
                     // First let's check if the stash contains any items. If it doesn't, remove that stash from the database if it exists.
                     JArray itemsArray = (JArray)jsonStash.SelectToken("items");
-                    Stash stashFromDb = StashesDb.Find((string)jsonStash.SelectToken("id"));
+                    Stash stashFromDb = Stashes.Find((string)jsonStash.SelectToken("id"));
 
                     currentStash = CreateNewStash(jsonStash);
                     foreach (JObject item in itemsArray)
@@ -62,7 +70,7 @@ namespace PoEMap.Classes
                     {
                         if (stashFromDb != null)
                         {
-                            StashesDb.Remove(currentStash);
+                            Stashes.Remove(currentStash);
                         }
                         continue;
                     }
@@ -74,7 +82,7 @@ namespace PoEMap.Classes
                         }
                         else
                         {
-                            await StashesDb.AddAsync(currentStash);
+                            await Stashes.AddAsync(currentStash);
                         }
                     }
                 }
