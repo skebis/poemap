@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using PoEMap.Classes;
+using System;
 
 namespace PoEMap
 {
@@ -8,13 +12,30 @@ namespace PoEMap
 
         public static void Main(string[] args)
         {
-            ApiFetching.ApiFetch();
-            BuildWebHost(args).Run();
+            var host = CreateWebHostBuilder(args).Build();
+
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                try
+                {
+                    var context = services.GetRequiredService<StashContext>();
+                    context.Database.EnsureCreated();
+                    ApiFetching.ApiFetch(services);
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+
+            }
+            host.Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .Build();
-    }
+                .UseStartup<Startup>();
+            }
 }

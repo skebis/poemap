@@ -13,9 +13,9 @@ namespace PoEMap.Classes
         public DbSet<Stash> Stashes { get; set; }
         public DbSet<Map> Maps { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public StashContext(DbContextOptions<StashContext> options)
+            : base(options)
         {
-            optionsBuilder.UseSqlite("Data Source=maps.db");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

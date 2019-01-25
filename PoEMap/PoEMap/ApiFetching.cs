@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Linq;
 using PoEMap.Classes;
 using System;
@@ -24,14 +25,14 @@ namespace PoEMap
         // Delay if we got error for too many requests.
         private static readonly int floodDelay = 20000;
         // Set data fetching to be always on.
-        private static bool fetching = true;
+        private static bool fetching = false;
         private static string nextId;
         private static readonly string nextIdFile = "nextid.txt";
 
         /// <summary>
         /// Asyncronously fetches data from the API.
         /// </summary>
-        public static async void ApiFetch()
+        public static async void ApiFetch(IServiceProvider serviceProvider)
         {
             // Let our web service start before we start fetching data.
             await Task.Delay(initialDelay);
@@ -39,6 +40,7 @@ namespace PoEMap
             {
                 nextId = File.ReadAllText(nextIdFile);
             }*/
+            nextId = "332971755-344800922-325627252-373107710-352752023";
             SetNextAddress();
 
             while (fetching)
@@ -54,7 +56,8 @@ namespace PoEMap
 
                     JArray jsonStashes = (JArray)jsonContent.SelectToken("stashes");
 
-                    using (var context = new StashContext())
+                    using (var context = new StashContext(serviceProvider.GetRequiredService<
+                        DbContextOptions<StashContext>>()))
                     {
                         context.StoreMaps(jsonStashes);
                         await context.SaveChangesAsync();
@@ -90,7 +93,7 @@ namespace PoEMap
                 }
 
                 // Wait a bit before making another request to avoid flooding / errors.
-                await Task.Delay(timeDelay);
+                await Task.Delay(floodDelay);
             }
         }
 
