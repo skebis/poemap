@@ -12,6 +12,8 @@ namespace PoEMap
 
         public static void Main(string[] args)
         {
+            // TODO: fix services disposing
+
             var host = CreateWebHostBuilder(args).Build();
 
             using (var scope = host.Services.CreateScope())
@@ -29,9 +31,9 @@ namespace PoEMap
                 {
                     Console.WriteLine(e);
                 }
-
+                host.Run();
             }
-            host.Run();
+
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

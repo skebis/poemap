@@ -10,8 +10,8 @@
     <div class="form-actions no-color">
         <p>
             Find by name:
-            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
-            <input type="submit" value="Search" class="btn btn-default" /> |
+            <input type="text" asp-for="SearchString" />
+            <input type="submit" value="Search" /> |
             <a asp-page="./Index">Back to search</a>
         </p>
     </div>
@@ -21,13 +21,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.MapsList[0].MapName)
+                Map Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MapsList[0].Price)
+                Price
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MapsList[0].Stash.Seller)
+                Seller
             </th>
         </tr>
     </thead>

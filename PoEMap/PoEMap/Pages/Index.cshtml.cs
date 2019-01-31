@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using PoEMap.Classes;
 
 namespace PoEMap.Pages
@@ -12,32 +13,31 @@ namespace PoEMap.Pages
     public class IndexModel : PageModel
     {
 
-        private readonly StashContext _context;
+        private readonly StashContext Context;
 
         public IndexModel(StashContext context)
         {
-            _context = context;
+            Context = context;
         }
 
-        public IList<Map> MapsList { get; set; }
+        public IQueryable<Map> MapsList { get; set; }
         public IEnumerable<Map> MapsDisplayed { get; set; }
-        public string CurrentFilter { get; set; }
-        public SelectList MapTypes { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string SearchString { get; set; }
+
+        //public SelectList MapTypes { get; set; }
+
         public int DefaultAmount = 50;
 
-        public async Task OnGetAsync(string searchString)
+        public void OnGet()
         {
-            var maps = from m in _context.Maps
-                       select m;
+            MapsList = Context.Maps.Include(x => x.Stash);
 
-            CurrentFilter = searchString;
-
-            if (!string.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(SearchString))
             {
-                maps = maps.Where(s => s.MapName.Contains(searchString));
+                MapsList = MapsList.Where(s => s.MapName.Contains(SearchString));
             }
-
-            MapsList = maps.ToList();
             MapsDisplayed = MapsList.Take(DefaultAmount);
         }
     }

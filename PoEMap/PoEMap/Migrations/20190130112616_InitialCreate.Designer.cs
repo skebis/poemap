@@ -8,7 +8,7 @@ using PoEMap.Classes;
 namespace PoEMap.Migrations
 {
     [DbContext(typeof(StashContext))]
-    [Migration("20190123101749_InitialCreate")]
+    [Migration("20190130112616_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

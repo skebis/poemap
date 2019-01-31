@@ -56,8 +56,8 @@ namespace PoEMap
 
                     JArray jsonStashes = (JArray)jsonContent.SelectToken("stashes");
 
-                    using (var context = new StashContext(serviceProvider.GetRequiredService<
-                        DbContextOptions<StashContext>>()))
+                    using (var context = new StashContext(serviceProvider
+                            .GetRequiredService<DbContextOptions<StashContext>>()))
                     {
                         context.StoreMaps(jsonStashes);
                         await context.SaveChangesAsync();
@@ -93,7 +93,7 @@ namespace PoEMap
                 }
 
                 // Wait a bit before making another request to avoid flooding / errors.
-                await Task.Delay(floodDelay);
+                await Task.Delay(timeDelay);
             }
         }
 

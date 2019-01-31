@@ -15,7 +15,7 @@ namespace PoEMap.Classes
 
         public string Seller { get; set; }
         public string StashName { get; set; }
-        public List<Map> Maps { get; set; }
+        public virtual List<Map> Maps { get; set; }
 
         /// <summary>
         /// Constructor for empty stash-object.

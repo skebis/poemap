@@ -13,7 +13,7 @@ namespace PoEMap.Classes
         public string MapId { get; set; }
 
         // Testing related data!!
-        public Stash Stash { get; set; }
+        public virtual Stash Stash { get; set; }
 
         public string MapName { get; set; }
         public string Note { get; set; }
