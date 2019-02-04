@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>PoEMap - Buy maps quickly!</h1>
+<h1>PoEMap - map database</h1>
 
 <form asp-page="./Index" method="get">
     <div class="form-actions no-color">
@@ -13,6 +13,11 @@
             <input type="text" asp-for="SearchString" />
             <input type="submit" value="Search" /> |
             <a asp-page="./Index">Back to search</a>
+
+            Select league:
+            <select asp-for="LeagueString" asp-items="Model.Leagues">
+                <option value="">All</option>
+            </select>
         </p>
     </div>
 </form>

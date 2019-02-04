@@ -25,19 +25,32 @@ namespace PoEMap.Pages
 
         [BindProperty(SupportsGet = true)]
         public string SearchString { get; set; }
-
+        [BindProperty(SupportsGet = true)]
+        public string LeagueString { get; set; }
+        public SelectList Leagues { get; set; }
         //public SelectList MapTypes { get; set; }
 
         public int DefaultAmount = 50;
 
         public void OnGet()
         {
+            IQueryable<string> leaguesQuery = from m in Context.Maps
+                                              orderby m.League
+                                              select m.League;
+
             MapsList = Context.Maps.Include(x => x.Stash);
 
             if (!string.IsNullOrEmpty(SearchString))
             {
-                MapsList = MapsList.Where(s => s.MapName.Contains(SearchString));
+                MapsList = MapsList.Where(s => s.MapName.ToUpper().Contains(SearchString.ToUpper()));
             }
+            if (!string.IsNullOrEmpty(LeagueString))
+            {
+                MapsList = MapsList.Where(x => x.League == LeagueString);
+            }
+
+            Leagues = new SelectList(leaguesQuery.Distinct().ToList());
+
             MapsDisplayed = MapsList.Take(DefaultAmount);
         }
     }
