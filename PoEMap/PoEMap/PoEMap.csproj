@@ -15,6 +15,8 @@
     <Compile Remove="Migrations\20190122141548_InitialCreate.Designer.cs" />
     <Compile Remove="Migrations\20190123101749_InitialCreate.cs" />
     <Compile Remove="Migrations\20190123101749_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20190130112616_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190130112616_InitialCreate.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
 	<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.1" />
@@ -44,5 +46,8 @@
     <Content Update="Web.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 </Project>

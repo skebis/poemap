@@ -12,6 +12,7 @@ namespace PoEMap
 {
     /// <summary>
     /// Asyncronously fetches stash tab API (json) data from the site and creates a JObject out of it.
+    /// Also keeps 
     /// </summary>
     public class ApiFetching
     {
