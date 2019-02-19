@@ -1,11 +1,10 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PoEMap.Classes
 {
     /// <summary>
-    /// Map-structure to store important information about map-items.
+    /// Map-object to store important information about map-items.
     /// </summary>
     public class Map
     {
@@ -21,8 +20,6 @@ namespace PoEMap.Classes
         public string Orb { get; set; }
 
         public string League { get; set; }
-        // icon maybe not needed.
-        //public string IconAddress { get; set; }
 
         /// <summary>
         /// Constructor for empty map-object.
@@ -75,6 +72,7 @@ namespace PoEMap.Classes
                 string clearPrice = price.Substring(price.IndexOf(' ') + 1);
                 // Creates a string array which holds the number at [0] and the used currency item at [1].
                 string[] numberAndPrice = clearPrice.Split(' ');
+                // If the array is too small, the price wasn't set correctly by the player.
                 if (numberAndPrice.Length < 2)
                 {
                     SetNoPrice();
@@ -87,7 +85,7 @@ namespace PoEMap.Classes
             }
             catch (Exception e)
             {
-                // If something went wrong with the array and parsing, just return undefined.
+                // If something went wrong with the array and parsing, just set the price as undefined.
                 Console.WriteLine(e.Message);
                 SetNoPrice();
             }

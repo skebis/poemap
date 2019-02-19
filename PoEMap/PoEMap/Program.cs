@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PoEMap.Classes;
 using System;
@@ -12,8 +11,6 @@ namespace PoEMap
 
         public static void Main(string[] args)
         {
-            // TODO: fix services disposing
-
             var host = CreateWebHostBuilder(args).Build();
 
             using (var scope = host.Services.CreateScope())

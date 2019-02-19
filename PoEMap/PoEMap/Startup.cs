@@ -22,7 +22,7 @@ namespace PoEMap
         {
             services.AddMvc();
             services.AddDbContext<StashContext>(options =>
-                options.UseSqlite("Data Source=maps.db"));
+                options.UseSqlite(Configuration.GetConnectionString("StashContextDatabase")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

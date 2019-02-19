@@ -1,12 +1,11 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PoEMap.Classes
 {
     /// <summary>
-    /// Stash-class for storing maps.
+    /// Stash-object for storing maps and keeping track of stash owner and stash name.
     /// </summary>
     public class Stash
     {
@@ -15,6 +14,7 @@ namespace PoEMap.Classes
 
         public string Seller { get; set; }
         public string StashName { get; set; }
+        // Relation to maps-list.
         public virtual List<Map> Maps { get; set; }
 
         /// <summary>
@@ -22,15 +22,15 @@ namespace PoEMap.Classes
         /// </summary>
         public Stash()
         {
-            //
+            // Nothing needed here.
         }
 
         /// <summary>
-        /// Constructor for Stash-object with two parameters (stash id and owner).
+        /// Constructor for Stash-object with three parameters (stash id, owner and stash name). Also initiates the maps-list.
         /// </summary>
         /// <param name="id">Stash id.</param>
         /// <param name="lastCharName">Owner or seller.</param>
-        /// <param name="stashName"></param>
+        /// <param name="stashName">Stash name.</param>
         public Stash(string id, string lastCharName, string stashName)
         {
             StashId = id;

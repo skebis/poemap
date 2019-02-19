@@ -5,9 +5,8 @@ using Microsoft.EntityFrameworkCore;
 namespace PoEMap.Classes
 {
     /// <summary>
-    /// Maplist-class with all stashes that contain maps.
+    /// DatabaseContext-class that contains database sets for stashes and maps. Uses SQLite, database file is "maps.db".
     /// </summary>
-
     public class StashContext : DbContext
     {
         public DbSet<Stash> Stashes { get; set; }
@@ -18,6 +17,7 @@ namespace PoEMap.Classes
         {
         }
 
+        // Builds the database model.
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Map>()
@@ -29,7 +29,7 @@ namespace PoEMap.Classes
         /// <summary>
         /// Creates a new stash-object and initializes it with an id, owner and (stash)name.
         /// </summary>
-        /// <param name="jsonStash">Currently processed stash.</param>
+        /// <param name="jsonStash">Currently processed stash from the json.</param>
         /// <returns>New stash object.</returns>
         public Stash CreateNewStash(JObject jsonStash)
         {

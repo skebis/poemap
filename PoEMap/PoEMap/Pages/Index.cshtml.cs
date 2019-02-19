@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -20,6 +18,7 @@ namespace PoEMap.Pages
             Context = context;
         }
 
+        // The whole list of maps.
         public IQueryable<Map> MapsList { get; set; }
         public IEnumerable<Map> MapsDisplayed { get; set; }
 
@@ -41,20 +40,22 @@ namespace PoEMap.Pages
                                               orderby m.League
                                               select m.League;
 
-            // Load related data (Stash -> Maps -> Stash) so we can get the seller from Stash-object.
+            // Load related data (Stash <-> Maps) so we can get the seller from Stash-object.
             MapsList = Context.Maps.Include(x => x.Stash);
 
-            // Search-function, ignores lower / upper characters when the search is done.
+            // Filters search to only show maps from selected league.
+            if (!string.IsNullOrEmpty(LeagueString))
+            {
+                MapsList = MapsList.Where(x => x.League.Equals(LeagueString));
+            }
+
+            // Search-function, ignores lowercase / uppercase characters when the search is done (toUpper() might be pretty expensive here).
             if (!string.IsNullOrEmpty(SearchString))
             {
                 MapsList = MapsList.Where(s => s.MapName.ToUpper().Contains(SearchString.ToUpper()));
             }
-            // Filters search to only show maps from selected league.
-            if (!string.IsNullOrEmpty(LeagueString))
-            {
-                MapsList = MapsList.Where(x => x.League == LeagueString);
-            }
 
+            // Orders the list from cheapest map to most expensive map.
             MapsList = MapsList.OrderBy(c => c.PriceDouble * SetRatio(c.Orb));
 
             // Shows all possible leagues in a selectlist.
