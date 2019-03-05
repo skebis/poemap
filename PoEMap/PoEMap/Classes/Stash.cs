@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PoEMap.Classes
@@ -14,8 +15,9 @@ namespace PoEMap.Classes
 
         public string Seller { get; set; }
         public string StashName { get; set; }
-        // Relation to maps-list.
-        public virtual List<Map> Maps { get; set; }
+
+        // Relation to maps-list (one-to-many).
+        public List<Map> Maps { get; set; }
 
         /// <summary>
         /// Constructor for empty stash-object.

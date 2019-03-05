@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Linq;
 using PoEMap.Classes;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -15,6 +16,11 @@ namespace PoEMap
     /// </summary>
     public class ApiFetching
     {
+        // Dictionary-structure to hold correct currency-representations.
+        public static Dictionary<string, string> currencyNames;
+        // Dictionary-structure to hold estimated currency ratios.
+        public static Dictionary<string, double> currencyRatios;
+
         private static HttpClient httpClient = new HttpClient();
         private static readonly string baseAddress = "http://www.pathofexile.com/api/public-stash-tabs";
         private static string nextAddress = "http://www.pathofexile.com/api/public-stash-tabs";
@@ -24,8 +30,9 @@ namespace PoEMap
         private static readonly int initialDelay = 15000;
         // Delay if we got error for too many requests.
         private static readonly int floodDelay = 20000;
-        // Set data fetching to be always on.
+
         private static bool fetching = true;
+
         private static string nextId;
         private static readonly string nextIdFile = "nextid.txt";
 
@@ -34,6 +41,8 @@ namespace PoEMap
         /// </summary>
         public static async void ApiFetch(IServiceProvider serviceProvider)
         {
+            InitializeDictionaries();
+
             // Let our web service start before we start fetching data.
             await Task.Delay(initialDelay);
 
@@ -61,7 +70,6 @@ namespace PoEMap
                         await context.SaveChangesAsync();
                     }
 
-                    // Get the next id from the current API and set it to next address.
                     nextId = (string)jsonContent.SelectToken("next_change_id");
 
                     WriteNextIdToFile();
@@ -122,6 +130,54 @@ namespace PoEMap
             {
                 nextId = File.ReadAllText(nextIdFile);
             }
+        }
+
+        /// <summary>
+        /// Initializes the static dictionaries, currencyNames and currencyRatios, with keys and values.
+        /// Ratios are hand-picked and rough estimates.
+        /// </summary>
+        private static void InitializeDictionaries()
+        {
+            currencyNames = new Dictionary<string, string>
+            {
+                {"chaos", "Chaos Orb"},
+                {"alch", "Orb of Alchemy"},
+                {"chisel", "Cartographer's Chisel"},
+                {"vaal", "Vaal Orb"},
+                {"jew", "Jeweller's Orb"},
+                {"fuse", "Orb of Fusing"},
+                {"chance", "Orb of Chance"},
+                {"scour", "Orb of Scouring"},
+                {"alt", "Orb of Alteration"},
+                {"regal", "Regal Orb"},
+                {"chrom", "Chromatic Orb"},
+                {"regret", "Orb of Regret"},
+                {"blessed", "Blessed Orb"},
+                {"exa", "Exalted Orb"},
+                {"divine", "Divine Orb"},
+                {"gcp", "Gemcutter's Prism"}
+            };
+
+            currencyRatios = new Dictionary<string, double>
+            {
+                {"Chaos Orb", 1},
+                {"Orb of Alchemy", 0.5},
+                {"Cartographer's Chisel", 0.5},
+                {"Vaal Orb", 2},
+                {"Jeweller's Orb", 0.125},
+                {"Orb of Fusing", 0.5},
+                {"Orb of Chance", 0.1},
+                {"Orb of Scouring", 0.5},
+                {"Orb of Alteration", 0.25},
+                {"Regal Orb", 1},
+                {"Chromatic Orb", 0.25},
+                {"Orb of Regret", 1},
+                {"Blessed Orb", 0.2},
+                {"Exalted Orb", 170},
+                {"Divine Orb", 20},
+                {"Gemcutter's Prism", 1.5},
+                {"Undefined", 999999}
+            };
         }
     }
 }

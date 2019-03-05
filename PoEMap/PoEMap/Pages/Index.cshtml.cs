@@ -40,8 +40,10 @@ namespace PoEMap.Pages
                                               orderby m.League
                                               select m.League;
 
-            // Load related data (Stash <-> Maps) so we can get the seller from Stash-object.
-            MapsList = Context.Maps.Include(x => x.Stash);
+            // Load related data (Stash <-> Maps <-> Currency) so we can get the seller from Stash-object and price from Currency-object.
+            MapsList = Context.Maps
+                .Include(x => x.Stash)
+                .Include(c => c.Price);
 
             // Filters search to only show maps from selected league.
             if (!string.IsNullOrEmpty(LeagueString))
@@ -56,7 +58,7 @@ namespace PoEMap.Pages
             }
 
             // Orders the list from cheapest map to most expensive map.
-            MapsList = MapsList.OrderBy(c => c.PriceDouble * SetRatio(c.Orb));
+            //MapsList = MapsList.OrderBy(c => c.Price.PriceDouble * SetRatio(c.Price.Orb));
 
             // Shows all possible leagues in a selectlist.
             Leagues = new SelectList(leaguesQuery.Distinct().ToList());
@@ -71,59 +73,7 @@ namespace PoEMap.Pages
         /// <returns>Ratio to Chaos Orbs</returns>
         public double SetRatio(string orb)
         {
-            switch (orb)
-            {
-                case "Chaos Orb":
-                    return 1;
-
-                case "Orb of Alchemy":
-                    return 0.5;
-
-                case "Cartographer's Chisel":
-                    return 0.5;
-
-                case "Vaal Orb":
-                    return 2;
-
-                case "Jeweller Orb":
-                    return 0.125;
-
-                case "Orb of Fusing":
-                    return 0.5;
-
-                case "Orb of Chance":
-                    return 0.1;
-
-                case "Orb of Scouring":
-                    return 0.5;
-
-                case "Orb of Alteration":
-                    return 0.25;
-
-                case "Regal Orb":
-                    return 1;
-
-                case "Chromatic Orb":
-                    return 0.25;
-
-                case "Orb of Regret":
-                    return 1;
-
-                case "Blessed Orb":
-                    return 0.2;
-
-                case "Exalted Orb":
-                    return 170;
-
-                case "Divine Orb":
-                    return 20;
-
-                case "Gemcutter's Prism":
-                    return 1.5;
-
-                default:
-                    return 1;
-            }
+            return ApiFetching.currencyRatios[orb];
         }
     }
 }

@@ -11,6 +11,7 @@ namespace PoEMap.Classes
     {
         public DbSet<Stash> Stashes { get; set; }
         public DbSet<Map> Maps { get; set; }
+        public DbSet<Currency> Currencies { get; set; }
 
         public StashContext(DbContextOptions<StashContext> options)
             : base(options)
@@ -23,6 +24,13 @@ namespace PoEMap.Classes
             modelBuilder.Entity<Map>()
                 .HasOne(p => p.Stash)
                 .WithMany(b => b.Maps)
+                .HasForeignKey(m => m.StashForeignKey)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Map>()
+                .HasOne(p => p.Price)
+                .WithOne(m => m.Map)
+                .HasForeignKey<Currency>(c => c.MapForeignKey)
                 .OnDelete(DeleteBehavior.Cascade);
         }
 
