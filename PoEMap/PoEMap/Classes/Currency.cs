@@ -35,6 +35,10 @@ namespace PoEMap.Classes
             SetPrice(price);
         }
 
+        /// <summary>
+        /// Returns correct representation of the Currency-object.
+        /// </summary>
+        /// <returns>Undefined, or price and the currency-item (example: 2 Orb of Alteration).</returns>
         public override string ToString()
         {
             if (Orb.Equals("Undefined"))
@@ -87,7 +91,7 @@ namespace PoEMap.Classes
             }
             catch (Exception e)
             {
-                // If something went wrong with the array and parsing, just set the price as undefined.
+                // If something went wrong with the array and parsing, i.e. player set invalid price, just set the price as undefined.
                 Console.WriteLine(e.Message);
                 SetNoPrice();
             }
@@ -99,7 +103,13 @@ namespace PoEMap.Classes
         /// <param name="priceDouble">The numeral part of the price.</param>
         public void SetPriceDouble(string priceDouble)
         {
-            PriceDouble = double.Parse(priceDouble);
+            if (priceDouble.Contains('/'))
+            {
+                string[] pd = priceDouble.Split('/');
+                double newPrice = Math.Round(double.Parse(pd[0]) / double.Parse(pd[1]), 2);
+                PriceDouble = newPrice;
+            }
+            else PriceDouble = double.Parse(priceDouble);
         }
 
         /// <summary>

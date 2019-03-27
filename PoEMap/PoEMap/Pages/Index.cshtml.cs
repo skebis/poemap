@@ -58,7 +58,7 @@ namespace PoEMap.Pages
             }
 
             // Orders the list from cheapest map to most expensive map.
-            //MapsList = MapsList.OrderBy(c => c.Price.PriceDouble * SetRatio(c.Price.Orb));
+            MapsList = MapsList.OrderBy(c => c.Price.PriceDouble * SetRatio(c.Price.Orb));
 
             // Shows all possible leagues in a selectlist.
             Leagues = new SelectList(leaguesQuery.Distinct().ToList());

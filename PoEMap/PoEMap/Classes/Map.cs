@@ -22,6 +22,7 @@ namespace PoEMap.Classes
         public string League { get; set; }
 
         // Relation to currency-object (one-to-one).
+        [DisplayFormat(HtmlEncode = false)]
         public Currency Price { get; set; }
 
         /// <summary>

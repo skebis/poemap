@@ -176,7 +176,7 @@ namespace PoEMap
                 {"Exalted Orb", 170},
                 {"Divine Orb", 20},
                 {"Gemcutter's Prism", 1.5},
-                {"Undefined", 999999}
+                {"Undefined", 999999} // TODO: Some other way to calculate undefined.
             };
         }
     }
