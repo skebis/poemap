@@ -64,6 +64,7 @@ namespace PoEMap.Classes
                     JArray itemsArray = (JArray)jsonStash.SelectToken("items");
                     Stash stashFromDb = Stashes.Find((string)jsonStash.SelectToken("id"));
 
+                    // Testing
                     if ((string)jsonStash.SelectToken("lastCharacterName") == "EasyForEnceEsports")
                     {
                         Console.WriteLine("Löytyi");

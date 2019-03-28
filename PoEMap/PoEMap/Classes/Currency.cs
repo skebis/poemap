@@ -103,6 +103,7 @@ namespace PoEMap.Classes
         /// <param name="priceDouble">The numeral part of the price.</param>
         public void SetPriceDouble(string priceDouble)
         {
+            // Checks if the price is set as a fractional. Example: "~price 5/2 chaos"
             if (priceDouble.Contains('/'))
             {
                 string[] pd = priceDouble.Split('/');

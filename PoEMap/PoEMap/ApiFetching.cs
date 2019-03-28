@@ -31,7 +31,7 @@ namespace PoEMap
         // Delay if we got error for too many requests.
         private static readonly int floodDelay = 20000;
 
-        private static bool fetching = true;
+        private static bool fetching = false;
 
         private static string nextId;
         private static readonly string nextIdFile = "nextid.txt";
