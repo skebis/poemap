@@ -13,6 +13,6 @@ Lisätietoa saa myös sivulta (https://www.reddit.com/r/pathofexiledev/comments/
 
 Käyttöohje:
 
-Ohjelma kuluttaa automaattisesti Public Stash Tab API:a, joka tapahtuu taustalla ohjelman ollessa käynnissä.
+Ohjelma kuluttaa automaattisesti Public Stash Tab API:a, joka tapahtuu taustalla ohjelman ollessa käynnissä. Kulutuksen voi sulkea tilapäisesti asettamalla fetching-arvoksi false.
 
 Hakusivustolla on erilaisia suodattimia, joiden avulla karttoja pystyy etsimään. Isot alkukirjaimet vaikuttavat ainoastaan jos etsitään karttoja myyjän nimen perusteella. Liigat ovat esitetty listassa, josta voidaan valita haluamansa.
