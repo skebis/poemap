@@ -6,6 +6,13 @@ using System;
 
 namespace PoEMap
 {
+    /// <summary>
+    /// Automatically generated class to start the program. Ensures that the database is created.
+    /// Creates a scope to access services (mainly the database).
+    /// 
+    /// Author: Emil Keränen
+    /// 14.4.2019
+    /// </summary>
     public class Program
     {
 

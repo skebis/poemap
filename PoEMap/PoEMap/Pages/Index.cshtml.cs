@@ -8,6 +8,12 @@ using PoEMap.Classes;
 
 namespace PoEMap.Pages
 {
+    /// <summary>
+    /// Razor page file for Index-page. Controls everything that happens on the Index-page.
+    /// 
+    /// Author: Emil Keränen
+    /// 14.4.2019
+    /// </summary>
     public class IndexModel : PageModel
     {
 
@@ -26,44 +32,53 @@ namespace PoEMap.Pages
         public string SearchString { get; set; }
         [BindProperty(SupportsGet = true)]
         public string LeagueString { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string NameString { get; set; }
 
         public SelectList Leagues { get; set; }
-        //public SelectList MapTypes { get; set; }
 
-        // How many maps are displayed for the user.
-        public int DefaultAmount = 50;
+        // How many maps are displayed.
+        public int DefaultAmount = 150;
 
         public void OnGet()
         {
             // Query for all possible leagues.
-            IQueryable<string> leaguesQuery = from m in Context.Maps
+            IQueryable<string> leaguesQuery = from m in Context.Maps.AsNoTracking()
                                               orderby m.League
                                               select m.League;
 
             // Load related data (Stash <-> Maps <-> Currency) so we can get the seller from Stash-object and price from Currency-object.
-            MapsList = Context.Maps
+            MapsList = Context.Maps.AsNoTracking()
                 .Include(x => x.Stash)
-                .Include(c => c.Price);
+                .AsNoTracking()
+                .Include(c => c.Price)
+                .AsNoTracking();
 
             // Filters search to only show maps from selected league.
             if (!string.IsNullOrEmpty(LeagueString))
             {
-                MapsList = MapsList.Where(x => x.League.Equals(LeagueString));
+                MapsList = MapsList.Where(x => x.League.Equals(LeagueString)).AsNoTracking();
             }
 
             // Search-function, ignores lowercase / uppercase characters when the search is done (toUpper() might be pretty expensive here).
             if (!string.IsNullOrEmpty(SearchString))
             {
-                MapsList = MapsList.Where(s => s.MapName.ToUpper().Contains(SearchString.ToUpper()));
+                MapsList = MapsList.Where(s => s.MapName.ToUpper().Contains(SearchString.ToUpper())).AsNoTracking();
+            }
+
+            // Search by seller name.
+            if (!string.IsNullOrEmpty(NameString))
+            {
+                MapsList = MapsList.Where(n => n.Stash.Seller.Contains(NameString)).AsNoTracking();
             }
 
             // Orders the list from cheapest map to most expensive map.
-            MapsList = MapsList.OrderBy(c => c.Price.PriceDouble * SetRatio(c.Price.Orb));
+            MapsList = MapsList.OrderBy(c => c.Price.PriceDouble * SetRatio(c.Price.Orb)).AsNoTracking();
 
             // Shows all possible leagues in a selectlist.
-            Leagues = new SelectList(leaguesQuery.Distinct().ToList());
+            Leagues = new SelectList(leaguesQuery.Distinct().AsNoTracking().ToList());
 
-            MapsDisplayed = MapsList.Take(DefaultAmount);
+            MapsDisplayed = MapsList.Take(DefaultAmount).AsNoTracking();
         }
 
         /// <summary>

@@ -7,6 +7,12 @@ using PoEMap.Classes;
 
 namespace PoEMap
 {
+    /// <summary>
+    /// Automatically generated class that initializes everything that is needed for hosting .NET Core Web Application.
+    /// 
+    /// Author: Emil Keränen
+    /// 14.4.2019
+    /// </summary>
     public class Startup
     {
 

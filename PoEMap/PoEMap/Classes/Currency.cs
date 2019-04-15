@@ -1,11 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace PoEMap.Classes
 {
+    /// <summary>
+    /// Currency-class to store information about the price of the item (map).
+    /// 
+    /// Author: Emil Keränen
+    /// 14.4.2019
+    /// </summary>
     public class Currency
     {
         public string CurrencyId { get; set; }

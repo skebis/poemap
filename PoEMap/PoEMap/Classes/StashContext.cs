@@ -5,7 +5,10 @@ using Microsoft.EntityFrameworkCore;
 namespace PoEMap.Classes
 {
     /// <summary>
-    /// DatabaseContext-class that contains database sets for stashes and maps. Uses SQLite, database file is "maps.db".
+    /// DatabaseContext-class that contains database sets for stashes, maps and currencies. Uses SQLite, database file is "maps.db".
+    /// 
+    /// Author: Emil Keränen
+    /// 14.4.2019
     /// </summary>
     public class StashContext : DbContext
     {
@@ -60,15 +63,14 @@ namespace PoEMap.Classes
                 Stash currentStash;
                 foreach (JObject jsonStash in jsonStashes)
                 {
-                    // First let's check if the stash contains any items. If it doesn't, remove that stash from the database if it exists.
-                    JArray itemsArray = (JArray)jsonStash.SelectToken("items");
-                    Stash stashFromDb = Stashes.Find((string)jsonStash.SelectToken("id"));
-
                     // Testing
                     if ((string)jsonStash.SelectToken("lastCharacterName") == "EasyForEnceEsports")
                     {
                         Console.WriteLine("Löytyi");
                     }
+
+                    JArray itemsArray = (JArray)jsonStash.SelectToken("items");
+                    Stash stashFromDb = Stashes.Find((string)jsonStash.SelectToken("id"));
 
                     currentStash = CreateNewStash(jsonStash);
                     foreach (JObject item in itemsArray)
@@ -84,7 +86,8 @@ namespace PoEMap.Classes
                     {
                         if (stashFromDb != null)
                         {
-                            Stashes.Remove(currentStash);
+                            Stashes.Remove(stashFromDb);
+                            await SaveChangesAsync();
                         }
                         continue;
                     }
@@ -92,13 +95,14 @@ namespace PoEMap.Classes
                     {
                         if (stashFromDb != null)
                         {
-                            Entry(stashFromDb).CurrentValues.SetValues(currentStash);
+                             Entry(stashFromDb).CurrentValues.SetValues(currentStash);
                         }
                         else
                         {
-                            await Stashes.AddAsync(currentStash);
+                            Stashes.Add(currentStash);
                         }
                     }
+                    await SaveChangesAsync();
                 }
             }
             catch (Exception e)

@@ -1,12 +1,14 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PoEMap.Classes
 {
     /// <summary>
     /// Stash-object for storing maps and keeping track of stash owner and stash name.
+    /// 
+    /// Author: Emil Keränen
+    /// 14.4.2019
     /// </summary>
     public class Stash
     {
@@ -70,20 +72,20 @@ namespace PoEMap.Classes
                 (string)item.SelectToken("league"));
 
             string price = "";
-            
+
             if (item.ContainsKey("note"))
             {
                 price = (string)item.SelectToken("note");
-                newMap.Note = price;
-            }
 
-            if (price.StartsWith('~'))
-            {
-                newMap.SetPrice(price);
-            }
-            else if (StashName != null && StashName.Length != 0 && StashName.StartsWith("~"))
-            {
-                newMap.SetPrice(StashName);
+                if (price.StartsWith('~'))
+                {
+                    newMap.SetPrice(price);
+                }
+                else if (StashName != null && StashName.Length != 0 && StashName.StartsWith("~"))
+                {
+                    newMap.SetPrice(StashName);
+                }
+                else newMap.SetNoPrice();
             }
             else newMap.SetNoPrice();
 

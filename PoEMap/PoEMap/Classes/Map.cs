@@ -5,7 +5,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace PoEMap.Classes
 {
     /// <summary>
-    /// Map-object to store important information about map-items.
+    /// Map-object to store information about map-items.
+    /// 
+    /// Author: Emil Keränen
+    /// 14.4.2019
     /// </summary>
     public class Map
     {
@@ -18,7 +21,6 @@ namespace PoEMap.Classes
         public Stash Stash { get; set; }
 
         public string MapName { get; set; }
-        public string Note { get; set; }
         public string League { get; set; }
 
         // Relation to currency-object (one-to-one).

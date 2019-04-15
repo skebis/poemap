@@ -13,6 +13,9 @@ namespace PoEMap
     /// <summary>
     /// Static class that asyncronously fetches stash tab API (json) data from the site and creates a JObject out of it.
     /// Opens an SQLite connection for storing the stashes and the maps.
+    /// 
+    /// Author: Emil Keränen
+    /// 14.4.2019
     /// </summary>
     public class ApiFetching
     {
@@ -31,7 +34,7 @@ namespace PoEMap
         // Delay if we got error for too many requests.
         private static readonly int floodDelay = 20000;
 
-        private static bool fetching = false;
+        private static bool fetching = true;
 
         private static string nextId;
         private static readonly string nextIdFile = "nextid.txt";
@@ -67,7 +70,6 @@ namespace PoEMap
                             .GetRequiredService<DbContextOptions<StashContext>>()))
                     {
                         context.StoreMaps(jsonStashes);
-                        await context.SaveChangesAsync();
                     }
 
                     nextId = (string)jsonContent.SelectToken("next_change_id");

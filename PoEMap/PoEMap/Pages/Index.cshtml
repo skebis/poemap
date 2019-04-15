@@ -4,12 +4,16 @@
     ViewData["Title"] = "Index";
 }
 
+@* Razor view -file. Controls what is shown to users.
+   Author: Emil Keränen
+    14.4.2019 *@
+
 <h1>PoEMap - map database</h1>
 
 <form asp-page="./Index" method="get">
     <div class="form-actions no-color">
         <p>
-            Find by name:
+            Find by map name:
             <input type="text" asp-for="SearchString" />
             <input type="submit" value="Search" /> |
             <a asp-page="./Index">Back to search</a>
@@ -18,6 +22,11 @@
             <select asp-for="LeagueString" asp-items="Model.Leagues">
                 <option value="">All</option>
             </select>
+
+            Find by buyer name:
+            <input type="text" asp-for="NameString" />
+            <input type="submit" value="Search" />
+            <a asp-page="./Index">Back to search</a>
         </p>
     </div>
 </form>
